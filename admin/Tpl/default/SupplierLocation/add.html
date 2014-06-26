@@ -1,0 +1,156 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<!--<script src="http://ditu.google.cn/maps?file=api&v=2&key={:conf('GOOGLE_MAP_API_KEY')}&sensor=true"
+        type="text/javascript">
+</script>-->
+<style type="text/css">
+    td span label{float:left; padding:3px; margin:2px; background:#E6E6E6; cursor:pointer; display:inline-block; }
+    td span label.active{background:#F60; color:#fff;}
+    #container{height:200px; width: 200px; float:left;}  
+    #container_front{width: 600px; height:500px; border: 1px solid #000; position: absolute; top: 10px; background-color: #fff; overflow: hidden;}
+    #container_m{ width: 550px; height: 450px; margin: 0 auto;}
+    #cancel_btn{display: block; width: 600px; height: 18px; line-height: 18px; text-align: right;}
+</style>
+
+<load href='__TMPL__Common/js/map.js' />
+<script type="text/javascript">
+function loadGeoInfo()
+{
+	var address = $("input[name='api_address']").val();
+    var geocoder = new GClientGeocoder();
+    geocoder.getLatLng(
+    address,
+    function(point)
+    {	
+    	if(!point)
+    	{
+    		alert("{%NO_ADDRESS_API}");
+    	}
+    	else
+    	{
+			$("input[name='xpoint']").val(point.x);
+			$("input[name='ypoint']").val(point.y);
+    		return;
+    	}				
+    });
+}
+</script>
+<script type="text/javascript">
+var blue_point = "__ROOT__/system/blue_point.png";
+var red_point = "__ROOT__/system/red_point.png";
+	$(document).ready(function(){
+		 $("input[name='search_api']").bind("click",function(){  
+		 	var api_address = $("input[name='api_address']").val();
+			var city=$("select[name='city_id']").find("option:selected").attr("rel");
+			if ($.trim(api_address) == '') {
+				alert("{%INPUT_KEY_PLEASE}");
+			}
+			else 
+			{
+				search_api(api_address, city);
+			}
+        });
+		draw_map('0','0');
+		$("#container_front").hide();
+        $("#cancel_btn").bind("click",function(){ $("#container_front").hide(); });
+        $("input[name='chang_api']").bind("click",function(){ 
+            editMap($("input[name='xpoint']").attr('value'),$("input[name='ypoint']").attr('value'));
+        });
+		
+		
+	});
+
+</script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script> 
+<div class="main">
+<div class="main_title">[{$supplier_info.name}] {%ADD_LOCATION} <a href="{:u("SupplierLocation/index",array("supplier_id"=>$supplier_info['id']))}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%NAME}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="name" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%LOCATION_ADDRESS}:</td>
+		<td class="item_input"><textarea class="textarea" name="address" ></textarea></td>
+	</tr>	
+	<tr>
+		<td class="item_title">{%LOCATION_ROUTE}:</td>
+		<td class="item_input"><textarea class="textarea" name="route" ></textarea></td>
+	</tr>	
+	<tr>
+		<td class="item_title">{%LOCATION_TEL}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="tel" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%LOCATION_CONTACT}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="contact" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%LOCATION_OPENTIME}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="open_time" /></td>
+	</tr>
+<!--	<tr>
+		<td class="item_title">{%LOCATION_API_ADDRESS}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="api_address" />
+			<input type="button" class="button" value="{%LOCATE_POINT}" onclick="loadGeoInfo();" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%LOCATION_API_POINT}:</td>
+		<td class="item_input">
+			{%XPOINT}:<input type="text" class="textbox" name="xpoint" />
+			{%YPOINT}:<input type="text" class="textbox" name="ypoint" />
+		</td>
+	</tr>
+-->	
+
+<tr>
+            <td class="item_title">地图定位</td>
+            <td class="item_input">            	
+            	关键词：<input type="text" class="textbox" name="api_address" value="" /> 
+				<input type="button" value="查找" class="button" name="search_api" id="search_api" >
+				<div style="height:10px; clear:both;"></div>
+                <div id="container"></div>
+				<div style="height:10px; clear:both;"></div>
+                <script type="text/javascript"></script> 
+                <input type="button" value="手动修改" name="chang_api" id="chang_api">
+                <div style="position:relative; top:-400px;">
+                    <div  id="container_front">
+                        <a href="#" id="cancel_btn">取消</a>
+                        <div id="container_m"></div>
+                    </div>
+                </div>
+				<input type="hidden" name="xpoint" />
+				<input type="hidden" name="ypoint" />
+            </td>
+    </tr>
+        <tr>
+		<td class="item_title">{%LOCATION_BRIEF}:</td>
+		<td class="item_input"><textarea class="textarea" name="brief" ></textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="supplier_id" value="{$supplier_info.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="SupplierLocation" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<include file="Public:footer" />

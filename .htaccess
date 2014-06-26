@@ -1,0 +1,90 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+
+RewriteRule ^wap\/(.*)$  wap\/$1 [L,QSA]
+
+# 优先修正关于几个uname的重写
+
+# http://www.easethink.com/fujian/deal/demo
+RewriteRule ^(\w+)\/deal\/([a-zA-Z]+)$   deal\.php\?city=$1&act=index&id=$2 [L,QSA]
+
+# http://www.easethink.com/fujian/deal/demo?r=MQ==
+RewriteRule ^(\w+)\/deal\/([a-zA-Z]+)\?r=(.*)$   deal\.php\?city=$1&act=index&id=$2&r=$3 [L,QSA]
+
+# http://www.easethink.com/fujian/deals/demo
+RewriteRule ^(\w+)\/deals\/(history|notice|index|comment)$   deals\.php\?city=$1&act=$2 [L,QSA]
+RewriteRule ^(\w+)\/deals\/([a-zA-Z]+)$   deals\.php\?city=$1&act=index&id=$2 [L,QSA]
+RewriteRule ^(\w+)\/deals\/(history|notice|index|comment)\/([a-zA-Z]+)$   deals\.php\?city=$1&act=$2&id=$3 [L,QSA]
+
+
+# http://www.easethink.com/fujian/article/demo
+RewriteRule ^(\w+)\/article\/([a-zA-Z]+)$   article\.php\?city=$1&act=index&id=$2 [L,QSA]
+
+
+
+# 先修正部份基础规则异常的重写
+
+# http://www.easethink.com/fujian/uc_coupon/sms 的 ajax get提交
+RewriteRule ^(\w+)\/sms\?(.*)$   sms\.php\?city=$1&$2 [L,QSA]
+
+# http://www.easethink.com/fujian/uc_coupon/sms/6
+RewriteRule ^(\w+)\/uc_coupon\/([a-zA-Z_]+)\/(\d+)$   uc_coupon\.php\?city=$1&act=$2&id=$3 [L,QSA]
+
+# http://www.easethink.com/fujian/link/go&url=www.easethink.com
+RewriteRule ^(\w+)\/link\/go&url=(.*)$   link\.php\?city=$1&act=go&url=$2 [L,QSA]
+
+# http://www.easethink.com/fujian/avatar/1&r=0.7367721431221631
+RewriteRule ^(\w+)\/avatar\/(\d+)&r=(.*)$   avatar\.php\?city=$1&act=index&id=$2&r=$3 [L,QSA]
+
+# http://www.easethink.com/fujian/message/deal/1
+RewriteRule ^(\w+)\/message\/([a-zA-Z_]+)\/(\d+)$   message\.php\?city=$1&act=$2&id=$3 [L,QSA]
+
+# http://www.easethink.com/fujian/coupon/verify
+RewriteRule ^(\w+)\/coupon\/([a-zA-Z_]+)$   coupon\.php\?city=$1&act=$2 [L,QSA]
+
+# http://www.easethink.com/fujian/uc_coupon/view/1&location_id=1
+RewriteRule ^(\w+)\/([a-zA-Z_]+)\/([a-zA-Z_]+)\/(\d+)&(.*)$   $2\.php\?city=$1&act=$3&id=$4&$5 [L,QSA]
+
+# http://www.easethink.com/fujian/deal/1?r=MQ==
+RewriteRule ^(\w+)\/deal\/(\d+)\?r=(.*)$   deal\.php\?city=$1&act=index&id=$2&r=$3 [L,QSA]
+
+# http://www.easethink.com/fujian/verify&rand=xxxxx
+RewriteRule ^(\w+)\/verify&rand=(.*)$   verify\.php\?city=$1&act=index&rand=$2 [L,QSA]
+
+# http://www.easethink.com/fujian/verify&rand=xxxxx
+RewriteRule ^(\w+)\/verify(.*)$   verify\.php\?city=$1&act=index&rand=$2 [L,QSA]
+
+# http://www.easethink.com/fujian/user/modify_password&code=871717&id=12
+RewriteRule ^(\w+)\/user/modify_password(.*)$   user\.php\?city=$1&act=modify_password$2 [L,QSA]
+
+
+#修正积分别名访问
+RewriteRule ^(\w+)\/score\/show\/(\w+)$   score\.php\?city=$1&act=show&id=$2 [L,QSA]
+RewriteRule ^(\w+)\/score\/(\w+)(.*)$   score\.php\?city=$1&id=$2$3 [L,QSA]
+
+
+#以下为基础规则
+
+# 如 http://www.easethink.com/fujian/deal/1
+RewriteRule ^(\w+)\/(ajax|api_callback|api|article|avatar|cart|coupon|deal|deals|link|message|msg_send|order|payment|referral|rss|score|search|second|sms|subscribe|supplier|uc_account|uc_coupon|uc_invite|uc_message|uc_money|uc_order|uc_voucher|user|verify|vote|acate)\/(\d+)$   $2\.php\?city=$1&act=index&id=$3 [L,QSA]
+
+# 如 http://www.easethink.com/fujian/message/deal/1
+RewriteRule ^(\w+)\/(ajax|api_callback|api|article|avatar|cart|coupon|deal|deals|link|message|msg_send|order|payment|referral|rss|score|search|second|sms|subscribe|supplier|uc_account|uc_coupon|uc_invite|uc_message|uc_money|uc_order|uc_voucher|user|verify|vote|acate)\/([a-zA-Z_]+)\/(\d+)$   $2\.php\?city=$1&act=$3&id=$4 [L,QSA]
+
+# 如 http://www.easethink.com/fujian/message/deals
+RewriteRule ^(\w+)\/(ajax|api_callback|dhapi|article|avatar|cart|coupon|deal|deals|link|message|msg_send|order|payment|referral|rss|score|search|second|sms|subscribe|supplier|uc_account|uc_coupon|uc_invite|uc_message|uc_money|uc_order|uc_voucher|user|verify|vote|acate)$   $2\.php\?city=$1&act=index [L,QSA]
+
+# 如 http://www.easethink.com/fujian/message/deals/history
+RewriteRule ^(\w+)\/(ajax|api_callback|api|article|avatar|cart|coupon|deal|deals|link|message|msg_send|order|payment|referral|rss|score|search|second|sms|subscribe|supplier|uc_account|uc_coupon|uc_invite|uc_message|uc_money|uc_order|uc_voucher|user|verify|vote|acate)\/([a-zA-Z_]+)$   $2\.php\?city=$1&act=$3 [L,QSA]
+
+# 重写城市 如 http://www.easethink.com/fujian
+RewriteRule ^(\w+)$  index\.php\?city=$1  [L,QSA]
+
+
+
+
+
+</IfModule>

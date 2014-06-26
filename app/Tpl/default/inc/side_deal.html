@@ -1,0 +1,27 @@
+	<div class="sbox side-goods-tip">
+	<div class="sbox-top"></div>
+	<div class="sbox-content">
+
+		<h2>{$LANG.SIDE_DEAL_LIST}</h2>
+		<ul>
+			{foreach from=$side_deal_list item=deal_item}
+			<li>
+				<a href="{$deal_item.url}" class="img" title="{$deal_item.name}">
+				<img alt="{$deal_item.name}" src="{$deal_item.icon}" />
+				</a>
+				<a href="{$deal_item.url}" class="title" title="{$deal_item.name}">
+				{function name="msubstr" value=$deal_item.name b="0" l="25"}			
+				</a>
+				<br />
+				<span style="font-size:12px;">
+				{function name="sprintf" value=$LANG.SUCCESS_BUY_COUNT p=$deal_item.buy_count}
+				{if $deal.buy_type eq 0}{$LANG.CURRENT_PRICE}{/if}{if $deal.buy_type eq 2}{$LANG.ORDER_PRICE}{/if}{if $deal.buy_type eq 3}{$LANG.SECOND_PRICE}{/if}:{function name="format_price" value=$deal_item.current_price}
+				</span>
+				<a href="javascript:void(0);" onclick="add_cart({$deal_item.id})"><img src="{$TMPL}/images/icon-buy-now.gif" align="absmiddle" /></a>
+			</li>	
+			{/foreach}	
+		</ul>
+		<div class="blank"></div>
+	</div>
+	<div class="sbox-bottom"></div>
+</div>

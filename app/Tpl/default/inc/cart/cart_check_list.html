@@ -1,0 +1,45 @@
+
+							<table class="order-table">
+								<tbody><tr>
+									<th class="deal-buy-desc">{$LANG.DEAL_ITEM}</th>
+									<th class="deal-buy-quantity">{$LANG.NUMBER}</th>									
+									<th class="deal-buy-price">{$LANG.PRICE}</th>															
+									<th class="deal-buy-total">{$LANG.TOTAL_PRICE}</th>
+									</tr>
+								{foreach from=$cart_list item=cart_item}
+								<tr>
+									<td class="deal-buy-desc">{$cart_item.name}</td>
+									
+									<td class="deal-buy-quantity">
+									{$cart_item.number}
+									</td>
+									
+									<td class="deal-buy-price">
+										{if $cart_item.buy_type neq 1}
+										{function name="format_price" value=$cart_item.unit_price}
+										{else}
+										<?php echo format_score(abs($this->_var['cart_item']['return_score']));?>
+										{/if}
+									</td>
+									
+									<td class="deal-buy-total">
+										{if $cart_item.buy_type neq 1}
+										{function name="format_price" value=$cart_item.total_price}
+										{else}
+										<?php echo format_score(abs($this->_var['cart_item']['return_total_score']));?>
+										{/if}									
+									</td>
+								</tr>
+								{/foreach}	
+																
+									<tr class="order-total">
+									<td class="deal-buy-desc"><strong>{$LANG.PAY_TOTAL_PRICE}</strong></td>
+									<td class="deal-buy-quantity"></td>									
+									<td class="deal-buy-price"></td>		
+															
+									<td class="deal-buy-total"><strong id="deal-buy-total-t">{function name="format_price" value=$total_price}</strong></td>
+									
+								</tr>
+							</tbody>
+							</table>
+							

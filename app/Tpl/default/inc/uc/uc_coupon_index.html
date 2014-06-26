@@ -1,0 +1,62 @@
+<div class="box">				
+	<div class="box">
+			<div class="box-top"></div>
+			<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>	
+							<ul class="filter">
+								<li {if $status eq 0}class="current"{/if}><a href="{function name="url_pack" value="uc_coupon#index" status=0}">所有</a></li>
+								<li {if $status eq 1}class="current"{/if}><a href="{function name="url_pack" value="uc_coupon#index" status=1}">未使用</a></li>
+								<li {if $status eq 2}class="current"{/if}><a href="{function name="url_pack" value="uc_coupon#index" status=2}">已使用</a></li>
+							</ul>					
+						</div>
+						<div class="sect">						
+						<table cellspacing="0" cellpadding="0" border="0" class="coupons-table" >
+								<tr>
+									<th>{$LANG.DEAL_ITEM}</th>
+									<th width=100>{$LANG.COUPON_SN}</th>
+									<th width=100>{$LANG.COUPON_PWD}</th>									
+									<th width=50>{$LANG.COUPON_END_TIME}</th>
+									<th width=50>{$LANG.COUPON_USE_TIME}</th>
+									<th width=50>{$LANG.OPERATION}</th>
+								</tr>
+								{foreach from=$list item=coupon key=key}
+								<tr {if $key mod 2 eq  0}class="alt"{/if}>
+									<td style="text-align:left;">{$coupon.deal_item.name}</td>
+									<td>{$coupon.sn}</td>
+									<td>{$coupon.password}</td>
+									
+									<td>
+										{if $coupon.end_time eq 0}
+										{$LANG.NEVER_EXPIRED}
+										{else}
+										{function name="to_date" value=$coupon.end_time}
+										{/if}
+									</td>
+									<td>
+										{if $coupon.confirm_time eq 0}
+										{$LANG.NOT_USED}
+										{else}
+										{function name="to_date" value=$coupon.confirm_time}
+										{/if}
+									</td>
+									<td>
+										{if $coupon.sms_count lt app_conf("SMS_COUPON_LIMIT")}
+										<a href="{function name="url_pack" value="uc_coupon#sms" id=$coupon.id}">{$LANG.SEND_COUPON_SMS}</a><br/>
+										{/if}
+										{if $coupon.mail_count lt app_conf("MAIL_COUPON_LIMIT")}
+										<a href="{function name="url_pack" value="uc_coupon#mail" id=$coupon.id}">{$LANG.SEND_COUPON_MAIL}</a><br/>
+										{/if}
+										<a href="{function name="url_pack" value="uc_coupon#view" id=$coupon.id}" target="_blank">{$LANG.VIEW}</a>
+									</td>
+								</tr>
+								{/foreach}
+						</table>
+						
+						<div class="blank"></div>
+						<div class="pages">{$pages}</div>
+						</div><!--end sect-->
+			</div>
+			<div class="box-bottom"></div>
+	</div>
+</div>

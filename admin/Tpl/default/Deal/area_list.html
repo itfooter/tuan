@@ -1,0 +1,6 @@
+<select name="area_id">
+	<option value="0">=={%NO_SELECT_AREA}==</option>
+	<foreach name="area_list" item="area_item" >
+		<option value="{$area_item.id}" <if condition="$area_item['selected']"> selected="selected"</if>>{$area_item.title_show}</option>
+	</foreach>
+</select>

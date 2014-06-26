@@ -1,0 +1,79 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-buy">
+			<div id="content">	
+			<div class="box" id="pay-success">
+				<div class="box-top"></div>
+				<div class="box-content">
+					<div class="head">
+						<h2>{$LANG.PAY_SUCCESS_CONGRATUATION}</h2>
+					</div>
+					<div class="sect">
+						{foreach from=$order_deals item=deal}
+						<div class="goods-info">													
+							<a href="{function name="url_pack" value="deal" id=$deal.id}">{$deal.name}</a>
+							{if $deal.buy_status eq 0}
+							{function name="sprintf" format=$LANG.UNSUCCESS_BUY_COUNT_TIP value=$deal.buy_count }
+							{/if}
+							{if $deal.buy_status eq 1}
+							{function name="sprintf" format=$LANG.SUCCESS_BUY_COUNT_TIP value=$deal.buy_count }
+							<a href="{function name="url_pack" v="message#deal" id=$deal.id}&is_buy=1" style="font-size:12px; color:#f30;">{$LANG.GO_TO_DIANPING}</a>
+							{/if}
+						</div>
+						{/foreach}
+						{if $is_coupon eq 1}
+						<div class="group-bond">
+								<div class="tltle">
+									<h3><?PHP echo sprintf($GLOBALS['lang']['YOU_HAVE_GOT_COUPON'],app_conf("COUPON_NAME"));?></h3>
+									<p><?PHP echo sprintf($GLOBALS['lang']['YOU_HAVE_GOT_COUPON_TIP'],app_conf("COUPON_NAME"));?></p>
+								</div>
+								
+								<div class="group-bond-box">
+									<p><?PHP echo sprintf($GLOBALS['lang']['GET_COUPON'],app_conf("COUPON_NAME"));?></p>
+									<div class="item">
+										<strong>{$LANG.PRINT}</strong>
+										<div><?PHP echo sprintf($GLOBALS['lang']['PRINT_COUPON'],"<a href='".url_pack("uc_coupon#index")."'>".$GLOBALS['lang']['USER_COUPON_LIST']."</a>",app_conf("COUPON_NAME"));?></div>
+									</div>
+									<?PHP if(app_conf("SMS_ON")==1&&app_conf("SMS_SEND_COUPON")==1&&$GLOBALS['tmpl']->_var['send_coupon_sms']==1){?>
+									<div class="item">
+										<strong>{$LANG.SMS}</strong>
+										<div><?PHP echo sprintf($GLOBALS['lang']['SMS_COUPON'],app_conf("COUPON_NAME"),"<a href='".url_pack("uc_coupon#index")."'>".$GLOBALS['lang']['USER_COUPON_LIST']."</a>",app_conf("COUPON_NAME"));?></div>
+									</div>
+									<?PHP }?>
+									<?PHP if(app_conf("MAIL_ON")==1&&app_conf("MAIL_SEND_COUPON")==1){?>
+									<div class="item">
+										<strong>{$LANG.MAIL}</strong>
+										<div><?PHP echo sprintf($GLOBALS['lang']['MAIL_COUPON'],app_conf("COUPON_NAME"),"<a href='".url_pack("uc_coupon#index")."'>".$GLOBALS['lang']['USER_COUPON_LIST']."</a>",app_conf("COUPON_NAME"));?></div>
+									</div>
+									<?PHP }?>
+								</div>
+						</div>
+						<div class="blank"></div>
+						{/if}
+						
+						{if $is_lottery eq 1}
+						<div class="group-bond">
+								<div class="tltle">
+									<h3>{$LANG.YOU_HAVE_GOT_LOTTERY}</h3>
+									<p>{$LANG.GO_TO_VIEW_LOTTERY}</p>
+								</div>
+								
+								<div class="group-bond-box">
+									<a href="{function name="url_pack" value="uc_order#lottery"}">{$LANG.VIEW_NOW_LOTTERY}</a>									
+								</div>
+								<div class="group-bond-box">
+								<a href="{function name="url_pack" value="uc_order#lottery"}">{$LANG.GET_INVITE_LOTTERY}</a>
+								</div>
+						</div>
+						{/if}				
+					</div>
+				</div>
+				<div class="box-bottom"></div>
+			</div><!--end pay_success-->
+			</div>
+
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

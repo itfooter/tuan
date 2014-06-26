@@ -1,0 +1,23 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="location.href='__APP__?m=CommentType&a=add'" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="checkList" 
+	style="dataTable" 
+	name="commenttype" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|80,name:{%NAME}:edit" 
+	actionlist="edit:{%EDIT}:id" />
+	<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

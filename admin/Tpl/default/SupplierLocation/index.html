@@ -1,0 +1,38 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_is_main_location($is_main,$id)
+	{
+		if($is_main==1)
+		{
+			return "<span style='color:red;'>".l("MAIN_LOCATION")."</span>";
+		}
+		else
+		{
+			return "<a href='".u("SupplierLocation/setMain",array("id"=>$id))."'>".l("SET_MAIN_LOCATION")."</a>";
+		}
+	}
+</php>
+<div class="main">
+<div class="main_title">[{$supplier_info.name}] {$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="location.href='__APP__?m=SupplierLocation&a=add&supplier_id={$supplier_info.id}'" />
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="location" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,name:{%NAME}:edit,is_main|get_is_main_location=$location['id']:{%IS_MAIN_LOCATION}" 
+	actionlist="edit:{%EDIT}, foreverdel:{%FOREVERDEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

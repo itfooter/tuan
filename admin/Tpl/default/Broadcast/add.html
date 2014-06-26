@@ -1,0 +1,72 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/adv.js' />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("Broadcast/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%NAME}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="name"  /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%BROADCAST_POSITION}:</td>
+		<td class="item_input">
+			<select name="code" class="require">
+					<option value="index">首页顶部</option>
+				    <option value="deals">套餐列表</option>
+				     <option value="article">文章页面</option>
+				     <option value="message">讨论区</option>
+				     <option value="score">积分商城</option>
+			</select><span style="color:#666;margin-left:20px;">*轮播图片都会在相应的模块顶部显示</span>
+		</td>
+	</tr>
+	
+		<tr>
+		<td class="item_title">{%CITY_IDS}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="city_ids"  /><span style="color:#666;margin-left:20px;">* 在英文状态下用半角逗号分隔可设置多个城市如：8,9,10</span></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%UPLOAD_IMG}:</td>
+		<td class="item_input">
+			<html:imgUpload name = 'image' id='image' />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%LINK_URL}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="link" style="width:350px;" value="http://" /></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%IS_EFFECT}:</td>
+		<td class="item_input">
+			<lable>{%IS_EFFECT_1}<input type="radio" name="is_effect" value="1" checked="checked" /></lable>
+			<lable>{%IS_EFFECT_0}<input type="radio" name="is_effect" value="0" /></lable>
+		</td>
+	</tr>
+
+	
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Broadcast" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<include file="Public:footer" />

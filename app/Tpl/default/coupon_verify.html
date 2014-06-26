@@ -1,0 +1,42 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			<div id="content">		
+	
+			<div class="box" id="login">				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>	
+							<div class="blank"></div>
+							{include file="inc/supplier_nav.html"}					
+						</div>
+						<div class="sect">
+							<div style="width: 550px; margin: 0px auto;" class="item">
+								<div class="blank"></div>
+								<strong>{$LANG.COUPON_VERIFY_TIP}</strong>
+								<div class="blank"></div>
+								<div class="blank"></div>
+								<div>
+									
+										{$LANG.COUPON_SN_SHORT}：<input value="" type="text" class="f-input" name="coupon_sn" id="coupon_sn"> <input type="button" value="{$LANG.COUPON_SEACHER}"  class="formbutton" onclick="check_coupon();" />
+										<div class="blank"></div>
+										<div class="blank"></div>
+										{$LANG.COUPON_PWD_SHORT}：<input value="" type="password" class="f-input" name="coupon_pwd" id="coupon_pwd"> <input type="button" value="{$LANG.COUPON_CONFIRM}" class="formbutton" onclick="use_coupon();">
+									
+								</div>
+							</div>			
+										
+						</div><!--en sect-->
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div></div>
+			
+			
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$page_title}{if !$hide_end_title} - {$shop_info.SHOP_TITLE}{if $city_title} - {$city_title}{$LANG.SITE}{/if}{/if} - {if $deal_city.seo_title eq ''}{function name='app_conf' value='SHOP_SEO_TITLE'}{else}{$deal_city.seo_title}{/if}</title>
+<meta name="keywords" content="{$page_keyword}{$city_title}{$shop_info.SHOP_KEYWORD}" />
+<meta name="description" content="{$page_description}{$city_title}{$shop_info.SHOP_DESCRIPTION}" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/weebox.css" />
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';
+var CART_URL = '{function name="url_pack" value="cart"}';
+var CART_CHECK_URL = '{function name="url_pack" value="cart#check"}';
+var LOADER_IMG = '{$TMPL}/images/loading.gif';
+</script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/broadcast.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.pngfix.js"></script>
+<script type="text/javascript" src="{$APP_ROOT}/app/Runtime/lang.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/lazyload.js"></script>
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1}
+<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>
+{/if}
+</head>
+
+<body class="bg-alt">
+<div id="doc">
+	<div id="hdw">
+		<div class="head">
+        <div id="hd">
+            <div id="logo">
+				<a class="link" href="{$APP_ROOT}/"><img src="{function name="app_conf" value="SHOP_LOGO"}" /></a>
+			</div>
+			{if count($deal_city_list) gt 1}
+            <div class="guides">
+                <div class="city">
+                    <h2>{$deal_city.name}</h2>
+
+                </div>
+                <div id="guides-city-change" class="change">{$LANG.SWITCH_CITY}</div>
+                <div id="guides-city-list" class="city-list">
+                  {foreach from=$deal_city_list_zm item=deal_city_group key=key}
+						<div class="city_group">
+						<table>
+						<tr>
+						<td class="zm">
+						{$key}
+						</td>
+						<td>
+						{foreach from=$deal_city_group item=deal_city_item}
+						<span {if $deal_city_item.id eq $deal_city.id}class="current"{/if}><a href="{$deal_city_item.url}" {if $deal_city_item.is_open eq 1}class="opencity"{/if}>{$deal_city_item.name}</a></span>
+						{/foreach}
+						</td>
+						</tr>
+						</table>
+						</div>
+					{/foreach}
+                </div>
+            </div>
+			{/if}
+            <ul class="nav cf">
+				{foreach from=$nav_list item=nav_item}
+				<li><a href="{$nav_item.url}"  target="{if $nav_item.blank eq 1}_blank{/if}" {if $nav_item.current eq 1}class="current"{/if}>{$nav_item.name}</a></li>
+				{/foreach}      
+			</ul>
+
+            <div class="refer">
+            {if app_conf("SMS_ON") eq 1}
+			» <a href="javascript:void(0)" onclick="submit_sms();">{$LANG.SMS_SUBSCRIBE}</a>&nbsp;&nbsp;
+			» <a href="javascript:void(0)" onclick="unsubmit_sms();">{$LANG.SMS_UNSUBSCRIBE}</a>&nbsp;&nbsp;
+			{/if}
+			» <a href="{function name="url_pack" value="subscribe#mail"}">{$LANG.MAIL_SUBSCRIBE}</a>&nbsp;&nbsp;
+			» <a href="{function name="url_pack" value="coupon#verify"}">{$LANG.VERIFY_COUPON}</a>&nbsp;&nbsp;
+			» <a href="{$APP_ROOT}/cart.php" style="text-decoration:none;">我的购物车<span class="cart_count" style="display:inline-block;color:#ff6600;font-weight:500;">{if $cart_count neq ''}{$cart_count}{else}0{/if}</span>件</a>
+			{if app_conf("CN_LANG") eq 1}
+			<script type="text/javascript" src="{$TMPL}/js/cn-tw.js"></script>
+			» <a href="javascript:lang_load();">{$LANG.CN_LANG}</a>&nbsp;&nbsp;
+			{/if}
+			</div>
+            <div class="logins">
+            {if $user_info}
+			<ul rel="" id="account">
+			<li title="{$user_info.user_name}" class="username">{$LANG.WELCOME}，{function name="msubstr" value=$user_info.user_name start="0" length="4"}！</li>
+			<li class="account"><a class="account" id="myaccount" href="{function name="url_pack" value="uc_account#index"}">{$LANG.MY_ACCOUNT}</a></li>
+			<li class="logout"><a href="{function name="url_pack" value="user#loginout"}">{$LANG.LOGINOUT}</a></li>
+			</ul>
+			{else}
+			<ul id="account" rel="">
+			<li class="login"><a href="{function name="url_pack" value="user#login"}">{$LANG.LOGIN}</a></li>
+            <li class="signup"><a href="{function name="url_pack" value="user#register"}">{$LANG.REGISTER}</a></li>
+			</ul>
+			{/if}
+			
+			
+			
+			
+            <div class="line"></div>
+            </div>
+			<ul id="myaccount-menu">
+			{foreach from=$user_menu item=menu_item}
+			<li><a href="{$menu_item.url}">{$menu_item.name}</a></li>
+			{/foreach}
+			
+			 </ul>
+			<div id="head-tel">{function name="app_conf" value="SHOP_TEL"}</div>        
+			<div class="search">
+				<form name="search" action="{function name='url_pack' value='search'}" method="post" class="cf">
+                    <input type="text" id="serch_text" name="se_name" class="search-input inactive"  x-webkit-speech="" x-webkit-grammar="builtin:search" lang="zh"value="{if !empty($se_name)}{$se_name}{else}请输入商家名&nbsp;/&nbsp;商品名{/if}" empty="请输入商家名&nbsp;/&nbsp;商品名"/>
+                    <input type="hidden" value="deals" name='se_module'>
+					<input type="hidden" value="index" name='se_action'>
+                    <input type="submit" class="s-submit" value="搜索"/>
+					<div class="clear"></div>
+			</form>
+			</div>
+			</div>			
+		</div>
+    </div>
+	{if $is_index eq 1}
+	<script type="text/javascript">
+		function set_sort(type)
+		{
+			var ajaxurl = APP_ROOT+"/ajax.php?act=set_sort_idx&type="+type;
+			$.ajax({ 
+				url: ajaxurl,
+				success: function(text){
+					location.reload();
+				},
+				error:function(ajaxobj)
+				{
+					if(ajaxobj.responseText!='')
+					alert(ajaxobj.responseText);
+				}
+			});
+		}
+	</script>
+	<div class="filter_contain cf">
+		<div class="cate_row">
+			<b>{$LANG.CATE_DEAL}：</b>
+			<a href="{$APP_ROOT}/index.php?area_id={$area_id}" title="全部" {if $deal_cate_id eq 0}class="current"{/if}>全部</a>
+			{foreach from=$bcate_list item=bcate}
+			<a href="{$bcate.url}" title="{$bcate.name}" {if $bdeal_cate_id eq $bcate.id}class="current"{/if}>{$bcate.name}[{$bcate.count}]</a>
+			{/foreach}
+		</div>
+		
+		{if $scate_list}
+		<div class="blank1"></div>		
+		<div class="sub_cate_row">	
+			{foreach from=$scate_list item=scate}		
+			<a href="{$scate.url}" title="{$scate.name}" {if $deal_cate_id eq $scate.id}class="current"{/if}>{$scate.name}[{$scate.count}]</a>
+			{/foreach}
+		</div>
+		{/if}
+		{if $barea_list}
+		<div class="blank1"></div>
+		<div class="area_row">
+			<b>{$LANG.AREA_DEAL}：</b>
+			<a href="{$APP_ROOT}/index.php?id={$deal_cate_id}" title="全部" {if $area_id eq 0}class="current"{/if}>全部</a>
+			{foreach from=$barea_list item=barea}
+			<a href="{$barea.url}" title="{$barea.name}" {if $barea_id eq $barea.id}class="current"{/if}>{$barea.name}[{$barea.count}]</a>
+			{/foreach}
+		</div>
+		{/if}		
+		{if $subarea_list}
+		<div class="blank1"></div>		
+		<div class="sub_cate_row" style="margin-bottom:0px;">	
+			{foreach from=$subarea_list item=barea}		
+			<a href="{$barea.url}" title="{$barea.name}" {if $area_id eq $barea.id}class="current"{/if}>{$barea.name}[{$barea.count}]</a>
+			{/foreach}
+		</div>
+		{/if}
+		<div class="sort_row">
+			<a href="javascript:void(0);" onclick="set_sort('begin_time');" class="{if $sort_field eq 'begin_time'}current idx_{$sort_type}{/if}">{$LANG.SORT_BEGIN_TIME}</a>
+			<a href="javascript:void(0);" onclick="set_sort('current_price');" class="{if $sort_field eq 'current_price'}current idx_{$sort_type}{/if}">{$LANG.SORT_CURRENT_PRICE}</a>
+			<a href="javascript:void(0);" onclick="set_sort('buy_count');" class="{if $sort_field eq 'buy_count'}current idx_{$sort_type}{/if}">{$LANG.SORT_BUY_COUNT}</a>
+			<a href="javascript:void(0);" onclick="set_sort('sort');" class="{if $sort_field eq 'sort'}current idx_{$sort_type}{/if}">{$LANG.SORT_SORT}</a>
+		</div>
+	</div>
+	{/if}
+	<div class="blank"></div>
+	<!--adBox-->
+	<div style=" width:960px; margin:0px auto;"><adv adv_id="头部广告位" /></div>
+	<!--end advBox-->
+	
+	
+	<div id="sysmsg-error-box">
+		<div class="sysmsgw hidd" id="sysmsg-error">
+			<div class="sysmsg"><span></span><span class="close">{$LANG.CLOSE}</span></div>
+		</div>		
+
+		<div class="sysmsgw hidd" id="sysmsg-success">
+				<div class="sysmsg"><span></span><span class="close">{$LANG.CLOSE}</span></div>
+		</div>
+	</div>
+	
+		{if $broadcast_nums gt 0}
+{if app_conf("BROADCAST") eq 1}
+	<div id="focus">
+	<ul>
+		{foreach from=$broadcast_list item=lunbo}		
+			<li><a href='{$lunbo.link}'><img src="{function name="get_spec_image" v=$lunbo.image w=960 h=310 g=0}" /></a></li>
+			{/foreach}
+    </ul>
+	</div>
+	{/if}
+	{/if}
+	
+	<script type="text/javascript">
+		{if $success}
+		$.showSuccess("{$success}");
+		{/if}
+		{if $error}
+		$.showErr("{$error}");
+		{/if}
+	</script>
+	<script type="text/javascript">        
+	$(".search-input").focus(function(){
+		if($.trim(this.value) == this.getAttribute("empty"))
+			this.value = "";
+		$(this).removeClass("inactive");
+			
+	}).blur(function(){
+		if($.trim(this.value) == "" || $.trim(this.value) == this.getAttribute("empty"))
+		{
+			this.value = this.getAttribute("empty");
+			$(this).addClass("inactive");
+		}
+	});
+	</script>

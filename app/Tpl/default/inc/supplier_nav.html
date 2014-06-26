@@ -1,0 +1,19 @@
+<style type="text/css">
+	.supplier_nav{font-size:12px; padding:0px 10px;}
+	.supplier_nav a { }
+</style>
+<div class="supplier_nav">
+	{if $account_data}
+	{$LANG.SUPPLIER}：{$account_data.name} 
+	<br />
+	{$LANG.HELLO}：{$account_data.account_name}	
+	[ <a style="color:#f30;" href="{function name="url_pack" value="coupon#publish"}">{$LANG.PUBLISH_DEAL}</a> ]	
+	[ <a <?php if($_REQUEST['act']=='deal'){ echo 'style="color:#f30;"'; }?> href="{function name="url_pack" value="coupon#deal"}">{$LANG.SUPPLIER_DEAL_LIST}</a> ]
+	[ <a <?php if($_REQUEST['act']=='order'){ echo 'style="color:#f30;"'; }?> href="{function name="url_pack" value="coupon#order"}">{$LANG.SUPPLIER_ORDER_LIST}</a> ]
+	[ <a <?php if($_REQUEST['act']=='verify'){ echo 'style="color:#f30;"'; }?> href="{function name="url_pack" value="coupon#verify"}">{$LANG.VERIFY_COUPON}</a> ]					
+	[ <a <?php if($_REQUEST['act']=='modify_pwd'){ echo 'style="color:#f30;"'; }?> href="{function name="url_pack" value="coupon#modify_pwd"}">{$LANG.MODIFY_PASSWORD}</a> ]
+	[ <a href="{function name="url_pack" value="coupon#loginout"}">{$LANG.LOGINOUT}</a> ]
+	{else}
+	[ <a href="{function name="url_pack" value="coupon#supplier_login"}">{$LANG.SUPPLIER_LOGIN}</a> ]
+	{/if}
+</div>		

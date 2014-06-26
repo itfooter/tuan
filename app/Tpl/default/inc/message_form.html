@@ -1,0 +1,318 @@
+<div class="cf" id="content" style="margin-left:0px;">	
+<script type="text/javascript"> 
+	$(document).ready(function(){
+		var temparray = new Array();
+		var cl = 0;
+		$(".star ul li").mousemove(	
+		function(){
+			var currentCount=0;
+			currentCount = $(this).parent("ul").children().index($(this)[0])
+			$(this).parent("ul").children().each(function(i){if(i<=currentCount)	
+						{
+							$(this).removeClass();
+							$(this).addClass("on");
+						}
+						else
+						{
+							$(this).removeClass();
+							$(this).addClass("off");
+						}})
+		}
+	)
+	.click(function(){
+			var temClassArry = new Array()
+			$(this).parent("ul").children().each(function(i){
+			temClassArry[i] = $(this).attr("class");
+			})
+			temparray = temClassArry;
+			cl = 1;
+			$(this).parent("ul").siblings("input:hidden").attr("value",$(this).parent("ul").children().index($(this)[0])+1);
+		})
+	.mouseout(function(){
+		if (cl == 0) {
+			temparray = 0;
+			$(this).parent("ul").siblings("input:hidden").attr("value",0);	
+		}
+		$(this).parent("ul").children().each(function(i){
+			$(this).removeClass();
+			$(this).addClass(temparray[i]);
+		});
+		cl = 0;
+	 })
+	});
+</script>			
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content"  id="uc">
+						<div class="head">
+							<h2>{$post_title}</h2>	
+							
+							{if $deal}
+							<ul class="filter">
+								<li {if $is_buy neq 1}class="current"{/if}><a href="{function name="url_pack" value="message#deal" id=$rel_id}&is_buy=0">{$LANG.BEFORE_BUY}</a></li>
+								<li {if $is_buy eq 1}class="current"{/if}><a href="{function name="url_pack" value="message#deal" id=$rel_id}&is_buy=1">{$LANG.AFTER_BUY}</a></li>
+							</ul>	
+							{/if}				
+						</div>
+						<div class="sect consult-list">
+							{* 留言列表 *}
+							<ul class="list" style="padding:0px 20px;">
+								{foreach from=$message_list item=message_item key=key}
+									<li name="consult-entry-{$message_item.id}" id="consult-entry-{$message_item.id}" {if $key mod 2 eq 0}class="alt"{/if} style="position:relative;">
+										<?php if(intval(app_conf("USER_AVATAR"))==1){?>
+											<img src="{function name="url_pack" value="avatar#small" id=$message_item.user_id}" style="border:2px solid #f2f2f2; position:absolute; top:5px; *top:25px; _top:25px; left:5px; " />
+										<?php }?>
+											<div class="item" <?php if(intval(app_conf("USER_AVATAR"))==1){ echo 'style="padding-left:70px;"'; }?> >
+											
+											<p>
+												{if $message_item.point gt 0}<span class="comment_{$message_item.point}"><?php echo $GLOBALS['lang']['COMMENT'.$this->_var['message_item']['point']];?></span>{/if}
+												<strong><?php if($_REQUEST['act']=='seller'){?>[{function name="get_deal_city_name" value=$message_item.city_id}]<?php }?>{function name="get_user_name" value=$message_item.user_id} </strong>
+												<span style="font-size:12px; color:#999;">
+												<?php echo sprintf($GLOBALS['lang']['SUPPLIER_COMMENT_SAY'],pass_date($this->_var['message_item']['create_time']));?>
+												</span>
+												
+											</p>
+											<div class="clear"></div>
+											<p class="text">
+												{function name="nl2br" value=$message_item.content}
+											</p>
+											{if $message_item.admin_reply neq ''}
+											<p class="reply">
+											<strong>{$LANG.REPLY}：</strong>{function name="nl2br" value=$message_item.admin_reply}<br>
+											</p>	
+											{/if}									
+										</div>
+									</li>
+								{/foreach}							
+							</ul>
+							{* 留言列表 *}
+							
+							<div class="blank clear"></div>							
+							<div class="pages">{$pages}</div>	
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+</div>
+<div class="blank"></div>
+
+<div class="box clear">
+						<div class="box-top"></div>
+						<div class="box-content">
+							<form method="post" id="consult-add-form" action="{function name="url_pack" value="message#add"}" name="message"  style="padding:0px 20px;">
+							<div name="consult-form-head" id="consult-form-head" class="head">
+								<h2>{$post_title}</h2>
+								{if $message_group}
+								<span>
+									{foreach from=$message_group item=type key=key}
+										<label>{$type}:<input type="radio" name="message_group" value="{$type}" {if $key eq 0}checked="checked"{/if} /></label>
+									{/foreach}
+								</span>
+								{/if}
+								
+								{if $deal}
+								{if $is_buy eq 1}
+								<div class="star" >
+									<span>{$maintype[0].name}</span>
+									<ul>
+										<li class="off">1</li>
+										<li class="off">2</li>
+										<li class="off">3</li>
+										<li class="off">4</li>
+										<li class="off">5</li>
+									</ul>
+									<p></p>
+									<input type="hidden" value="0" name="dp_point_group[{$maintype[0].id}]" />
+								</div>
+								{if $commentstype neq ''}
+								{foreach from=$commentstype item=type key=key}
+								<div class="star" id="1">
+									<span>{$type.name}</span>
+									<ul>
+										<li class="off">1</li>
+										<li class="off">2</li>
+										<li class="off">3</li>
+										<li class="off">4</li>
+										<li class="off">5</li>
+									</ul>
+									<span></span>
+									<p></p>
+									<input type="hidden" value="0" name="dp_point_group[{$type.id}]" />
+								</div>
+								{/foreach}
+								{/if}
+									<input type="hidden" name="is_buy" value="1" />
+									<label><input type="radio" name="point" value="3" checked="checked" /><span class="comment_3">{$LANG.COMMENT3}</span></label>
+									<label><input type="radio" name="point" value="2" /><span class="comment_2">{$LANG.COMMENT2}</span></label>
+									<label><input type="radio" name="point" value="1" /><span class="comment_1">{$LANG.COMMENT1}</span></label>
+								{/if}
+								{/if}
+							</div>
+							<div class="sect consult-form">
+								{if $user_info}
+									<?php if($_REQUEST['act']=='seller'){?>
+									<script type="text/javascript">
+										$(document).ready(function(){
+											$("#consult-add-form").find(".formbutton").bind("click",function(){
+												var msg = $.trim(($("#consult-add-form").find("textarea[name='content']").val()));
+												if(msg == '')
+												{
+													$.showErr("{$LANG.MESSAGE_CONTENT_EMPTY}");
+													return false;
+												}
+												var title = $.trim(($("#consult-add-form").find("input[name='title']").val()));
+												if(title == '')
+												{
+													$.showErr("{$LANG.SUPPLIER_NAME_EMPTY}");
+													$("#consult-add-form").find("input[name='title']").focus();
+													return false;
+												}
+												var contact_name = $.trim(($("#consult-add-form").find("input[name='contact_name']").val()));
+												if(contact_name == '')
+												{
+													$.showErr("{$LANG.CONTACT_NAME_EMPTY}");
+													$("#consult-add-form").find("input[name='contact_name']").focus();
+													return false;
+												}
+												var contact = $.trim(($("#consult-add-form").find("input[name='contact']").val()));
+												if(contact == '')
+												{
+													$.showErr("{$LANG.CONTACT_EMPTY}");
+													$("#consult-add-form").find("input[name='contact']").focus();
+													return false;
+												}
+																								
+											});
+										});
+									</script>
+									
+									<div class="field">
+									<label>{$LANG.SUPPLIER_NAME}</label>
+									<input type="text" tabindex="1" size="30" name="title" class="f-input" value="">
+									</div>
+									<div class="blank1"></div>
+									<div class="field">
+									<label>{$LANG.CONTACT_NAME}</label>
+									<input type="text" tabindex="1" size="30" name="contact_name" class="f-input" value="">
+									</div>
+									<div class="blank1"></div>
+									<div class="field">
+									<label>{$LANG.CONTACT}</label>
+									<input type="text" tabindex="1" size="30" name="contact" id="login-email-address" class="f-input" value="">
+									<span class="hint">{$LANG.CONTACT_TIP}</span>
+									</div>
+									<div class="blank1"></div>
+									<div class="field">
+									<label>{$LANG.DEAL_CITY}</label>
+									<select name="city_id">
+										{foreach from=$deal_city_list item=deal_city_item}
+										<option value="{$deal_city_item.id}">{$deal_city_item.name}</option>
+										{/foreach}
+									</select>
+									</div>
+									<div class="blank1"></div>
+									<div class="field">
+									<label>{$LANG.DEAL_INFO}</label>
+									<textarea name="content" rows="5" cols="60" class="f-textarea"></textarea>
+									</div>									
+									<div class="blank1"></div>
+									<div class="field">
+										<label></label>
+										<input type="hidden" value="{$rel_table}" name="rel_table">
+										<input type="hidden" value="{$rel_id}" name="rel_id">
+										<input type="submit" class="formbutton" name="commit" value="{$LANG.OK_POST}">
+									</div>
+									
+									<?PHP }else{?>		
+									<script type="text/javascript">
+											$(document).ready(function(){
+												$("#consult-add-form").find("input[name='message_group']").bind("click",function(){ 
+													if($(this).val() == "退款")
+													{
+														$(".goods-list").show();
+													}
+													else
+													{
+														$(".goods-list").hide();
+													}
+												});
+												$("#consult-add-form").find(".formbutton").bind("click",function(){
+													var msg = $.trim(($("#consult-add-form").find("textarea[name='content']").val()));
+													var chk=$('input:radio[name="message_group"]:checked').val();
+													if(msg == '')
+													{
+														$.showErr("{$LANG.MESSAGE_CONTENT_EMPTY}");
+														return false;
+													}
+													if($("input[name='is_buy']:checked").val()==1)
+													{
+														var rel_id = $("input[name='rel_id']").val();
+														var ajaxurl = APP_ROOT+"/ajax.php?act=check_buy&id="+rel_id;
+														$.ajax({ 
+															url: ajaxurl,
+															success: function(rs){
+																if(rs==0)
+																{
+																	$.showErr("{$LANG.AFTER_BUY_MESSAGE_TIP}");
+																	return false;
+																}
+																else
+																{
+																	$("#consult-add-form").submit();
+																}
+															},
+															error:function(ajaxobj)
+															{
+																if(ajaxobj.responseText!='')
+																alert(ajaxobj.responseText);
+																return false;
+															}
+														});
+													}
+													if(chk == "退款")
+													{
+														if($(".goods-list").children().find('input:checked').length > 0) 
+														{
+															$("#consult-add-form").submit();
+														}
+														else
+														{	
+															$.showErr("请选择要退款的商品！");
+															return false;
+														}
+													}
+													else
+													{
+														$("#consult-add-form").submit();
+													}
+													return false;
+												});
+											});
+										</script>
+								<div class="goods-list" style="display:none;">
+								<h5>请选择要退款的商品：</h5>
+									<ul>
+										{foreach from=$order_info.deal_list item=deal name=d key=key}
+										<li id={$deal.deal_id}><input type="checkbox" name="deal_id[{$smarty.foreach.d.index}]" value="{$deal.deal_id}">{$deal.name}</li>
+										{/foreach}
+									</ul>
+								</div>	
+									<textarea name="content" rows="5" cols="60" class="f-textarea"></textarea>
+									<div class="blank"></div>
+									<p class="commit">
+										<input type="hidden" value="{$rel_table}" name="rel_table">
+										<input type="hidden" value="{$rel_id}" name="rel_id">
+										<input type="submit" class="formbutton" name="commit" value="{$LANG.OK_POST}">
+									</p>
+									<?PHP }?>
+									<div class="blank"></div>
+								
+								{else}
+								{$message_login_tip}
+								{/if}
+							</div>
+						</div>
+						</form>
+						<div class="box-bottom"></div>
+</div>
+

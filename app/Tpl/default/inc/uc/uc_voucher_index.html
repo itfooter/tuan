@@ -1,0 +1,46 @@
+<div class="box">				
+	<div class="box">
+			<div class="box-top"></div>
+			<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>
+							<ul class="filter">
+								<li class="current"><a href="{function name="url_pack" value="uc_voucher#index"}">{$LANG.UC_VOUCHER}</a></li>
+								<li><a href="{function name="url_pack" value="uc_voucher#incharge"}">{$LANG.UC_VOUCHER_INCHARGE}</a></li>
+								<li><a href="{function name="url_pack" value="uc_voucher#exchange"}">{$LANG.UC_VOUCHER_EXCHARGE}</a></li>
+							</ul>			
+						</div>
+						<div class="sect">
+						
+						<table cellspacing="0" cellpadding="0" border="0" class="coupons-table" >
+								<tr>
+									<th>{$LANG.VOUCHER_INFO}</th>
+									<th>{$LANG.VOUCHER_TIME}</th>
+									<th>{$LANG.VOUCHER_USE_LIMIT}</th>
+									<th>{$LANG.VOUCHER_USE_COUNT}</th>
+								</tr>
+								{foreach from=$list item=voucher key=key}
+								<tr {if $key mod 2 eq  0}class="alt"{/if}>
+									<td style="text-align:left;">
+										{$LANG.VOUCHER_NAME}：{$voucher.name}<br />
+										{$LANG.VOUCHER_MONEY}：{function name="format_price" value=$voucher.money}<br />
+										{$LANG.VOUCHER_SN}：{$voucher.sn}
+										{if $voucher.password}
+										<br />{$LANG.VOUCHER_PASSWORD}：{$voucher.password}
+										{/if}
+									</td>
+									<td>{function name="to_date" value=$voucher.begin_time} {$LANG.TO} {function name="to_date" value=$voucher.end_time} </td>
+									<td>{$voucher.use_limit}</td>
+									<td>{$voucher.use_count}</td>
+									
+								</tr>
+								{/foreach}
+						</table>
+						
+						<div class="blank"></div>
+						<div class="pages">{$pages}</div>
+						</div><!--end sect-->
+			</div>
+			<div class="box-bottom"></div>
+	</div>
+</div>

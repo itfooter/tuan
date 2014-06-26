@@ -1,0 +1,47 @@
+<!--登录表单-->
+
+								<form method="post" action="{function name="url_pack" value="user#dologin"}" name="reg_form">
+								<div class="field email">
+									<label for="login-email-address">{$LANG.USER_TITLE_EMAIL}/{$LANG.USER_TITLE_USER_NAME}</label>
+									<input type="text" value="" class="f-input" id="login-email-address" name="email" size="30" tabindex="1">
+								</div>
+								<div class="clear"></div>
+								<div class="field password">
+									<label for="login-password">{$LANG.USER_TITLE_USER_PWD}</label>
+									<input type="password" value="" class="f-input" id="login-password" name="user_pwd" size="30" tabindex="2">
+									<span class="lostpassword"> <a href="{function name="url_pack" value="user#getpassword"}">{$LANG.FORGET_PASSWORD}</a></span> </div>
+								<div class="field autologin">
+									{$LANG.AUTO_LOGIN}<input type="checkbox" id="autologin" name="auto_login" value="1" tabindex="3">
+									
+								</div>
+								<div class="clear"></div>
+								<div class="act">
+									<input type="hidden" name="ajax" value="{$ajax}">
+									<input type="submit" class="formbutton" id="login-submit" name="commit" value="{$LANG.LOGIN}">
+									<input type="button" class="formbutton" id="login-submit" name="commit" value="{$LANG.REGISTER}" onclick="location.href='{function name="url_pack" value="user#register"}';" />
+								</div>
+								<div class="act">
+								{function name="get_api_login"}
+								</div>
+							</form>
+<!--登录表单-->	
+<script type="text/javascript">
+$(document).ready(function(){
+$("#login-submit").click(function(){
+		
+		if($.trim($("#login-email-address").val()).length == 0)
+		{
+			$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}{$LANG.OR}{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_NAME}");
+			$("#login-email-address").focus();
+			return false;
+		}
+
+		if(!$.minLength($("#login-password").val(),4,false))
+		{
+			$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_PWD}");
+			$("#login-password").focus();
+			return false;
+		}
+	});	
+});
+</script>

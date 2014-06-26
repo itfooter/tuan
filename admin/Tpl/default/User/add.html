@@ -1,0 +1,84 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("User/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_NAME}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="user_name" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_EMAIL}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="email" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_MOBILE}:</td>
+		<td class="item_input"><input type="text" class="textbox <PHP>if(intval(app_conf("MOBILE_MUST"))==1) echo 'require';</PHP>" name="mobile" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_PASSWORD}:</td>
+		<td class="item_input"><input type="password" class="textbox require" name="user_pwd" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_CONFIRM_PASSWORD}:</td>
+		<td class="item_input"><input type="password" class="textbox require" name="user_confirm_pwd" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_GROUP}:</td>
+		<td class="item_input">
+			<select name="group_id">
+				<foreach name="group_list" item="group_item">
+					<option value="{$group_item.id}">{$group_item.name}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%IS_EFFECT}:</td>
+		<td class="item_input">
+			<lable>{%IS_EFFECT_1}<input type="radio" name="is_effect" value="1" checked="checked" /></lable>
+			<lable>{%IS_EFFECT_0}<input type="radio" name="is_effect" value="0" /></lable>
+		</td>
+	</tr>
+	<foreach name="field_list" item="field_item">
+	<tr>
+		<td class="item_title">{$field_item.field_show_name}:</td>
+		<td class="item_input">
+			 <if condition="$field_item['input_type'] eq 0">
+			 	<input type="text" class="textbox <if condition="$field_item['is_must'] eq 1">require</if>" name="{$field_item.field_name}" />
+			 </if>
+			 
+			 <if condition="$field_item['input_type'] eq 1">
+			 	<select name="{$field_item.field_name}">
+			 		<foreach name="field_item.value_scope" item="value_item">
+			 			<option value="{$value_item}">{$value_item}</option>
+			 		</foreach>
+			 	</select>
+			 </if>
+		</td>
+	</tr>
+	</foreach>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="User" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<include file="Public:footer" />
