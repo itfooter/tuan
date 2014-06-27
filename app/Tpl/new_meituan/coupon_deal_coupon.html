@@ -1,0 +1,61 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="uc">
+			<div id="content" class="cf" style="overflow:hidden;">	
+								
+					<div class="box">
+						<div class="box-top"></div>
+						<div class="box-content">
+							<div class="head">
+								<h2>{$page_title}</h2>
+								<div class="blank"></div>
+								{include file="inc/supplier_nav.html"}	
+							</div>
+							<div class="sect">								
+									
+								<table cellspacing="0" cellpadding="0" border="0" class="coupons-table" >
+									<tr>
+										<th>{$LANG.COUPON_SN}</th>
+										<th>{$LANG.COUPON_BEGIN_TIME}</th>
+										<th>{$LANG.COUPON_END_TIME}</th>						
+										<th>{$LANG.ORDER_USER}</th>
+										<th>{$LANG.COUPON_ORDER_GOODS}</th>
+										<th>{$LANG.COUPON_USE_TIME}</th>
+									</tr>
+									{foreach from=$coupon_list item=coupon key=key}
+									<tr {if $key mod 2 eq  0}class="alt"{/if}>
+										<td style="text-align:left;">
+											{$coupon.sn}											
+										</td>
+										<td>
+											{if $coupon.begin_time eq 0}{$LANG.NOT_LIMIT_TIME}{else}{function name="to_date" value=$coupon.begin_time}{/if}
+										</td>
+										<td>
+											{if $coupon.end_time eq 0}{$LANG.NOT_LIMIT_TIME}{else}{function name="to_date" value=$coupon.end_time}{/if}
+										</td>
+										<td>										
+											{function name="get_user_name" v=$coupon.user_id}
+										</td>
+										<td>
+											{function name="get_order_item_link" v=$coupon.order_deal_id}
+										</td>
+										<td>
+											{function name="get_coupon_confirm_time" v=$coupon.confirm_time}
+										</td>
+									</tr>
+									{/foreach}
+							</table>
+							<div class="blank"></div>
+							<div class="pages">{$pages}</div>
+							</div>
+						</div>
+						<div class="box-bottom"></div>
+					</div>
+						
+			</div>
+
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

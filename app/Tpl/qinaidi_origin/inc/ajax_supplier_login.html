@@ -1,0 +1,65 @@
+<!--登录表单-->
+			<form method="post" action="{function name="url_pack" value="coupon#supplier_dologin"}" name="reg_form">
+								<div class="field account">
+									<label>{$LANG.SUPPLIER_ACCOUNT}</label>
+									<input type="text" value="" class="f-input" id="account_name" name="account_name" size="30" tabindex="1">
+								</div>
+								<div class="clear"></div>
+								<div class="field password">
+									<label>{$LANG.SUPPLIER_PASSWORD}</label>
+									<input type="password" value="" class="f-input" id="account_password" name="account_password" size="30" tabindex="2">
+									
+								</div>								
+								<div class="clear"></div>
+								<div class="act">
+									<input type="submit" class="formbutton" id="login-submit" name="commit" value="{$LANG.LOGIN}">
+								</div>
+			</form>
+<!--登录表单-->	
+<script type="text/javascript">
+$(document).ready(function(){
+$("#login-submit").click(function(){
+		var account_name = $.trim($("#account_name").val());
+		var account_password = $.trim($("#account_password").val());		
+		if(account_name.length == 0)
+		{
+			$.showErr(LANG.PLEASE_ENTER_ACCOUNT);
+			$("#account_name").focus();
+			return false;
+		}
+
+		if(account_password.length == 0)
+		{
+			$.showErr(LANG.PLEASE_ENTER_PASSWORD);
+			$("#account_password").focus();
+			return false;
+		}
+		
+		var query = new Object();
+		query.account_name = account_name;
+		query.account_password = account_password;
+		query.act = "supplier_dologin";
+		var ajaxurl = APP_ROOT+"/coupon.php"; 
+		$.ajax({ 
+			url: ajaxurl,
+			type: "POST",
+			data: query,
+			dataType:"json",
+			success: function(obj){
+				if(obj.status==1)
+				{
+					location.href = "{function name="url_pack" value="coupon#verify"}";
+				}
+				else
+				$.showErr(obj.msg);
+			},
+			error:function(ajaxobj)
+			{
+				alert(ajaxobj.responseText);
+			}
+		});	
+		
+		return false;
+	});	
+});
+</script>

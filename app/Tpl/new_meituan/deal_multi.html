@@ -1,0 +1,100 @@
+{include file="inc/header.html"}
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			<div id="content">
+				{foreach from=$deal_list item=deal key=k}
+				<div class="goods-small {if $k % 2 eq 0}gl{/if}">
+					<h2><a href="{$deal.url}" title="{$deal.name}">{$deal.name}</a></h2>
+					<a class="img" href="{$deal.url}" title="{$deal.name}"><img src="{$deal.img}" alt="{$deal.name}" /></a>
+					<div class="price">
+						<div class="price-bg"></div>
+						<p><a href="{$deal.url}"></a><strong>{$deal.current_price_format}</strong></p>
+					</div>
+					<table>
+						<tbody>
+							<tr>
+								<th>现价</th>
+								<td class="r">{$deal.current_price_format}</td>
+							</tr>
+							<tr>
+								<th>{$LANG.ORIGIN_PRICE}</th>
+								<td class="del">{$deal.origin_price_format}</td>
+							</tr>
+							<tr>
+								<th>{$LANG.DISCOUNT}</th>
+								<td>{$deal.discount}{$LANG.DISCOUNT_OFF}</td>
+							</tr>
+							<!--
+							<tr>
+								<th>{$LANG.SAVE_PRICE}</th>
+								<td>{$deal.save_price_format}</td>
+							</tr>
+							-->
+						</tbody>
+					</table>
+					<div class="clear"></div>
+					<div class="timeleft">
+						{if ($deal.begin_time ne 0 and $deal.time_status eq 0) or ($deal.end_time ne 0 and $deal.time_status eq 1)} {* 时间 *}
+						<div class="counter" endTime="{if $deal.time_status eq 0}<?PHP echo to_date($this->_var['deal']['begin_time'],'r');?>{else}<?PHP echo to_date($this->_var['deal']['end_time'],'r');?>{/if}"></div>
+						{/if}
+						{if $deal.time_status eq 0}{*/未开始/*}
+							{function name='sprintf' format=$LANG.DEAL_BEGIN_FORMAT value=$deal.begin_time_format}
+						{/if}
+					</div>
+					<div class="buy">{$deal.deal_success_num}</div>
+					<div class="clear"></div>
+				</div>
+				{if $k % 2 neq 0}<div class="clear"></div>{/if}
+				{/foreach}
+			</div>
+			{include file="inc/side.html"}
+	</div>
+	<!-- bd end -->
+</div>
+<script type="text/javascript">
+
+	function share_url(id)
+	{
+		if ($("#deal-share-im-c-"+id).css("display") == "none") {
+			$("#share-copy-text-"+id).val($("#share_url_"+id).val());
+			$("#deal-share-im-c-"+id).show();
+		}
+		else
+			$("#deal-share-im-c-"+id).hide();
+	}
+	function copy_text(id)
+	{
+		$.copyText('#share-copy-text-'+id);
+	}
+
+var updEndNowTime = <?PHP echo (get_gmtime()+ (intval(app_conf("TIME_ZONE"))*3600))."000";?>;
+function updateEndTime()
+{
+
+	var time = updEndNowTime;
+	$(".counter").each(function(i){
+		var endDate =new Date(this.getAttribute("endTime"));
+		var endTime = endDate.getTime();
+		var lag = (endTime - time) / 1000;
+		if(lag > 0)
+		{
+			var second = Math.floor(lag % 60);
+			var minite = Math.floor((lag / 60) % 60);
+			var hour = Math.floor((lag / 3600) % 24);
+			var day = Math.floor((lag / 3600) / 24);
+			var timeHtml = "<span>"+hour+"</span>"+LANG['HOUR']+"<span>"+minite+"</span>"+LANG['MIN'];
+			if(day > 0)
+				timeHtml ="<span>"+day+"</span>"+LANG['DAY'] + timeHtml;
+			timeHtml+="<span>"+second+"</span>"+LANG['SEC'];
+			$(this).html(timeHtml);
+		}
+		else
+			$(this).html("");
+	});
+	updEndNowTime+=1000;
+	setTimeout("updateEndTime()",1000);
+}
+updateEndTime();
+</script>
+{include file="inc/footer.html"}

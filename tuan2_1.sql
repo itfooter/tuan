@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2014 年 06 月 26 日 21:09
+-- 生成日期: 2014 年 06 月 27 日 19:01
 -- 服务器版本: 5.6.12-log
 -- PHP 版本: 5.4.12
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `tg_admin` (
 --
 
 INSERT INTO `tg_admin` (`id`, `adm_name`, `adm_password`, `is_effect`, `is_delete`, `role_id`, `login_time`, `login_ip`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1, 0, 4, 1403756002, '127.0.0.1');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1, 0, 4, 1403836509, '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -218,6 +218,27 @@ INSERT INTO `tg_broadcast` (`id`, `name`, `link`, `code`, `is_effect`, `image`, 
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `tg_collection`
+--
+
+CREATE TABLE IF NOT EXISTS `tg_collection` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deal_id` int(10) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `create_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='我的收藏表' AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `tg_collection`
+--
+
+INSERT INTO `tg_collection` (`id`, `deal_id`, `user_id`, `create_time`) VALUES
+(1, 15, 34, 0);
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `tg_comment`
 --
 
@@ -318,7 +339,7 @@ INSERT INTO `tg_conf` (`id`, `name`, `value`, `group_id`, `input_type`, `value_s
 (19, 'ALLOW_FILE_EXT', '1', 1, 0, '', 0, 1, 0),
 (20, 'BG_COLOR', '#ffffff', 2, 0, '', 1, 1, 57),
 (21, 'IS_WATER_MARK', '0', 2, 1, '0,1', 1, 1, 58),
-(22, 'TEMPLATE', 'default', 3, 0, '', 1, 1, 17),
+(22, 'TEMPLATE', 'new_meituan', 3, 0, '', 1, 1, 17),
 (25, 'SCORE_UNIT', '积分', 3, 0, '', 1, 1, 22),
 (26, 'USER_VERIFY', '1', 4, 1, '0,1', 1, 1, 63),
 (27, 'SHOP_LOGO', './public/attachment/201011/4cdd501dc023b.png', 3, 2, '', 1, 1, 19),
@@ -491,14 +512,15 @@ CREATE TABLE IF NOT EXISTS `tg_deal` (
   `account_id` int(11) NOT NULL,
   `create_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- 转存表中的数据 `tg_deal`
 --
 
 INSERT INTO `tg_deal` (`id`, `name`, `sub_name`, `cate_id`, `supplier_id`, `img`, `description`, `begin_time`, `end_time`, `min_bought`, `max_bought`, `user_min_bought`, `user_max_bought`, `origin_price`, `current_price`, `city_id`, `is_coupon`, `is_delivery`, `is_effect`, `is_delete`, `user_count`, `buy_count`, `time_status`, `buy_status`, `deal_type`, `allow_promote`, `return_money`, `return_score`, `brief`, `sort`, `deal_goods_type`, `success_time`, `coupon_begin_time`, `coupon_end_time`, `code`, `weight`, `weight_id`, `is_referral`, `buy_type`, `discount`, `icon`, `notice`, `free_delivery`, `define_payment`, `seo_title`, `seo_keyword`, `seo_description`, `is_hot`, `is_new`, `is_best`, `is_lottery`, `reopen`, `uname`, `forbid_sms`, `cart_type`, `hide_supplier_detail`, `area_id`, `publish_wait`, `account_id`, `create_time`) VALUES
-(15, '端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜500g正品', '野生土蜂蜜纯天然农家自产成熟蜂蜜500g', 28, 8, './public/attachment/201404/53404ab4a5b4c.jpg', '<p>端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜fengmi正品 </p>\r\n<p>最原生态的蜂蜜 未有任何人工加工 100%纯天然 嚼着吃的蜂蜜 7折包邮 </p>\r\n', 1403605080, 1412504341, 1, 111, 1, 5, 179.8000, 79.8000, 1, 0, 0, 1, 0, 1, 2, 1, 1, 0, 0, 0.0000, 0, '端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜fengmi正品！最原生态的蜂蜜 未有任何人工加工 100%纯天然 嚼着吃的蜂蜜 7折包邮', 0, 0, 1396693129, 0, 0, '', 500.0000, 1, 0, 0, 0.0000, './public/attachment/201406/53abc9f6776cd.jpg', 0, 0, 0, '', '', '', 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 8, 1396693104);
+(15, '端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜500g正品', '野生土蜂蜜纯天然农家自产成熟蜂蜜500g', 28, 8, './public/attachment/201404/53404ab4a5b4c.jpg', '<p>端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜fengmi正品 </p>\r\n<p>最原生态的蜂蜜 未有任何人工加工 100%纯天然 嚼着吃的蜂蜜 7折包邮 </p>\r\n', 1403605080, 1412504341, 1, 111, 1, 5, 179.8000, 79.8000, 1, 0, 0, 1, 0, 1, 2, 1, 1, 0, 0, 0.0000, 0, '端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜fengmi正品！最原生态的蜂蜜 未有任何人工加工 100%纯天然 嚼着吃的蜂蜜 7折包邮', 0, 3, 1396693129, 0, 0, '', 500.0000, 1, 0, 0, 0.0000, './public/attachment/201406/53abc9f6776cd.jpg', 0, 0, 0, '', '', '', 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 8, 1396693104),
+(17, 'ceshi', 'ceshi', 45, 8, '', 'ceshi', 0, 0, 0, 1, 0, 1, 100.0000, 50.0000, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0.0000, 0, 'ceshi', 1, 0, 1403825609, 0, 0, '', 0.0000, 1, 0, 0, 0.0000, '', 1, 0, 0, '', '', '', 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -514,7 +536,15 @@ CREATE TABLE IF NOT EXISTS `tg_deal_attr` (
   `deal_id` int(11) NOT NULL,
   `is_checked` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
+
+--
+-- 转存表中的数据 `tg_deal_attr`
+--
+
+INSERT INTO `tg_deal_attr` (`id`, `name`, `goods_type_attr_id`, `price`, `deal_id`, `is_checked`) VALUES
+(43, '随时退', 4, 0.0000, 15, 0),
+(42, '真实评价', 4, 0.0000, 15, 0);
 
 -- --------------------------------------------------------
 
@@ -545,13 +575,6 @@ CREATE TABLE IF NOT EXISTS `tg_deal_cart` (
   `attr_str` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=53 ;
-
---
--- 转存表中的数据 `tg_deal_cart`
---
-
-INSERT INTO `tg_deal_cart` (`id`, `session_id`, `user_id`, `deal_id`, `name`, `attr`, `unit_price`, `number`, `total_price`, `verify_code`, `create_time`, `update_time`, `return_money`, `return_total_money`, `return_score`, `return_total_score`, `buy_type`, `sub_name`, `supplier_id`, `attr_str`) VALUES
-(52, '01alek1dq4nc5dkkvusq7roiq4', 34, 15, '端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜500g正品', '0', 79.8000, 1, 79.8000, 'c705e1dcbf1d5c8cece7911a3bae1c0e', 1403755636, 1403755648, 0.0000, 0.0000, 0, 0, 0, '野生土蜂蜜纯天然农家自产成熟蜂蜜500g', 8, '');
 
 -- --------------------------------------------------------
 
@@ -687,7 +710,7 @@ CREATE TABLE IF NOT EXISTS `tg_deal_gallery` (
   `deal_id` int(11) NOT NULL,
   `sort` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=398 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=408 ;
 
 --
 -- 转存表中的数据 `tg_deal_gallery`
@@ -716,11 +739,11 @@ INSERT INTO `tg_deal_gallery` (`id`, `img`, `deal_id`, `sort`) VALUES
 (317, './public/attachment/201404/533e73e6c87e4.jpg', 13, 1),
 (380, './public/attachment/201404/533efb1e49b6b.png', 14, 1),
 (379, './public/attachment/201404/533efb10aa9d3.png', 14, 0),
-(397, './public/attachment/201404/53404ae438f79.jpg', 15, 4),
-(396, './public/attachment/201404/53404ad89d2ac.jpg', 15, 3),
-(395, './public/attachment/201404/53404acba7d20.jpg', 15, 2),
-(394, './public/attachment/201404/53404ac0ab9e9.jpg', 15, 1),
-(393, './public/attachment/201404/53404ab4a5b4c.jpg', 15, 0),
+(407, './public/attachment/201404/53404ae438f79.jpg', 15, 4),
+(406, './public/attachment/201404/53404ad89d2ac.jpg', 15, 3),
+(405, './public/attachment/201404/53404acba7d20.jpg', 15, 2),
+(404, './public/attachment/201404/53404ac0ab9e9.jpg', 15, 1),
+(403, './public/attachment/201404/53404ab4a5b4c.jpg', 15, 0),
 (382, './public/attachment/201404/5340d8e16cf59.png', 16, 0);
 
 -- --------------------------------------------------------
@@ -760,7 +783,7 @@ INSERT INTO `tg_deal_msg_list` (`id`, `dest`, `send_type`, `content`, `send_time
 (64, '130131960@qq.com', 1, 'ynyan你好! 你购买的[云南财经大学]回味时光大红门火锅，团购券11145812，已于2014-04-07 12:47:21使用', 1396817243, 1, 1396817241, 16, '', 1, 0, ''),
 (65, 'itfooter@vip.qq.com', 1, 'itfooter你好,你所下订单2014062606021926的收款单2014062606062223金额￥79.8于2014-06-26 18:06:22支付成功', 0, 0, 1403748382, 34, '', 0, 0, '收款通知'),
 (66, 'itfooter@vip.qq.com', 1, 'itfooter你好,你所下订单2014062606021926的收款单2014062606065654金额￥79.8于2014-06-26 18:06:56支付成功', 0, 0, 1403748416, 34, '', 0, 0, '收款通知'),
-(67, 'itfooter@vip.qq.com', 1, 'itfooter你好,你所下订单2014062606021926的收款单2014062606072472金额￥79.8于2014-06-26 18:07:24支付成功', 0, 0, 1403748444, 34, '', 0, 0, '收款通知');
+(67, 'itfooter@vip.qq.com', 1, 'itfooter你好,你所下订单2014062606021926的收款单2014062606072472金额￥79.8于2014-06-26 18:07:24支付成功', 1403824351, 0, 1403748444, 34, '发件失败的发件人地址piao@ynyan.cn', 0, 0, '收款通知');
 
 -- --------------------------------------------------------
 
@@ -4606,7 +4629,7 @@ CREATE TABLE IF NOT EXISTS `tg_goods_type` (
 --
 
 INSERT INTO `tg_goods_type` (`id`, `name`) VALUES
-(3, '公园门票');
+(3, '服务承诺');
 
 -- --------------------------------------------------------
 
@@ -4628,8 +4651,7 @@ CREATE TABLE IF NOT EXISTS `tg_goods_type_attr` (
 --
 
 INSERT INTO `tg_goods_type_attr` (`id`, `name`, `input_type`, `preset_value`, `goods_type_id`) VALUES
-(3, '空间大小', 1, '自备,300MB,1G,独享主机', 3),
-(4, '模板', 1, '绿色,红色,蓝色', 3);
+(4, '服务承诺', 1, '真实评价,随时退', 3);
 
 -- --------------------------------------------------------
 
@@ -4689,7 +4711,7 @@ CREATE TABLE IF NOT EXISTS `tg_log` (
   `module` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1527 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1554 ;
 
 --
 -- 转存表中的数据 `tg_log`
@@ -5510,7 +5532,34 @@ INSERT INTO `tg_log` (`id`, `log_info`, `log_time`, `log_admin`, `log_ip`, `log_
 (1523, '端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜500g正品更新成功', 1403756013, 1, '127.0.0.1', 1, 'Deal', 'update'),
 (1524, '更新系统配置', 1403756078, 1, '127.0.0.1', 1, 'Conf', 'update'),
 (1525, '更新系统配置', 1403757122, 1, '127.0.0.1', 1, 'Conf', 'update'),
-(1526, '分部添加成功', 1403758781, 1, '127.0.0.1', 1, 'SupplierLocation', 'insert');
+(1526, '分部添加成功', 1403758781, 1, '127.0.0.1', 1, 'SupplierLocation', 'insert'),
+(1527, 'admin登录成功', 1403808454, 1, '127.0.0.1', 1, 'Public', 'do_login'),
+(1528, '公园门票更新成功', 1403808889, 1, '127.0.0.1', 1, 'GoodsType', 'update'),
+(1529, '模板更新成功', 1403809024, 1, '127.0.0.1', 1, 'GoodsTypeAttr', 'update'),
+(1530, '空间大小彻底删除成功', 1403809072, 1, '127.0.0.1', 1, 'GoodsTypeAttr', 'foreverdelete'),
+(1531, '随时退更新成功', 1403809123, 1, '127.0.0.1', 1, 'GoodsTypeAttr', 'update'),
+(1532, '随时退更新成功', 1403809174, 1, '127.0.0.1', 1, 'GoodsTypeAttr', 'update'),
+(1533, '端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜500g正品更新成功', 1403809194, 1, '127.0.0.1', 1, 'Deal', 'update'),
+(1534, '更新系统配置', 1403809289, 1, '127.0.0.1', 1, 'Conf', 'update'),
+(1535, '更新系统配置', 1403809330, 1, '127.0.0.1', 1, 'Conf', 'update'),
+(1536, '更新系统配置', 1403809350, 1, '127.0.0.1', 1, 'Conf', 'update'),
+(1537, '随时退更新成功', 1403809559, 1, '127.0.0.1', 1, 'GoodsTypeAttr', 'update'),
+(1538, '端木赐百花蜂巢蜜 野生土蜂蜜纯天然农家自产成熟蜂蜜500g正品更新成功', 1403809582, 1, '127.0.0.1', 1, 'Deal', 'update'),
+(1539, 'admin登录成功', 1403823922, 1, '127.0.0.1', 1, 'Public', 'do_login'),
+(1540, '更新系统配置', 1403823942, 1, '127.0.0.1', 1, 'Conf', 'update'),
+(1541, '更新系统配置', 1403823981, 1, '127.0.0.1', 1, 'Conf', 'update'),
+(1542, '更新系统配置', 1403824035, 1, '127.0.0.1', 1, 'Conf', 'update'),
+(1543, 'FW卸载成功', 1403824287, 1, '127.0.0.1', 1, 'Sms', 'uninstall'),
+(1544, '15808715622,18042344388彻底删除成功', 1403824314, 1, '127.0.0.1', 1, 'MobileList', 'foreverdelete'),
+(1545, '测试管理员更新成功', 1403824421, 1, '127.0.0.1', 1, 'Role', 'update'),
+(1546, '更新系统配置', 1403824469, 1, '127.0.0.1', 1, 'Conf', 'update'),
+(1547, '更新系统配置', 1403824487, 1, '127.0.0.1', 1, 'Conf', 'update'),
+(1548, '892592266@qq.com,804811147@qq.com,14732058@qq.com,1346778@qq.com,85412@qq.com,7855444@qq.com彻底删除成功', 1403824533, 1, '127.0.0.1', 1, 'MailList', 'foreverdelete'),
+(1549, 'ceshi添加成功', 1403825609, 1, '127.0.0.1', 1, 'Deal', 'insert'),
+(1550, 'ceshi更新成功', 1403825947, 1, '127.0.0.1', 1, 'Deal', 'update'),
+(1551, 'ceshi更新成功', 1403827564, 1, '127.0.0.1', 1, 'Deal', 'update'),
+(1552, '浙一医院更新成功', 1403827659, 1, '127.0.0.1', 1, 'Supplier', 'update'),
+(1553, 'admin登录成功', 1403836509, 1, '127.0.0.1', 1, 'Public', 'do_login');
 
 -- --------------------------------------------------------
 
@@ -5550,12 +5599,6 @@ CREATE TABLE IF NOT EXISTS `tg_mail_list` (
 --
 
 INSERT INTO `tg_mail_list` (`id`, `mail_address`, `city_id`, `code`, `is_effect`) VALUES
-(3, '892592266@qq.com', 2, '', 1),
-(4, '804811147@qq.com', 2, '', 1),
-(5, '14732058@qq.com', 2, '', 1),
-(6, '1346778@qq.com', 2, '', 1),
-(7, '85412@qq.com', 2, '', 1),
-(8, '7855444@qq.com', 2, '', 1),
 (9, 'itfooter@vip.qq.com', 16, '', 1);
 
 -- --------------------------------------------------------
@@ -5584,7 +5627,7 @@ CREATE TABLE IF NOT EXISTS `tg_mail_server` (
 --
 
 INSERT INTO `tg_mail_server` (`id`, `smtp_server`, `smtp_name`, `smtp_pwd`, `is_ssl`, `smtp_port`, `use_limit`, `is_reset`, `is_effect`, `total_use`, `is_verify`) VALUES
-(8, 'smtp.exmail.qq.com', 'piao@ynyan.cn', 'admin715622', 0, '25', 0, 1, 1, 20, 1);
+(8, 'smtp.exmail.qq.com', 'piao@ynyan.cn', 'admin715622', 0, '25', 0, 1, 1, 21, 1);
 
 -- --------------------------------------------------------
 
@@ -5673,8 +5716,6 @@ CREATE TABLE IF NOT EXISTS `tg_mobile_list` (
 --
 
 INSERT INTO `tg_mobile_list` (`id`, `mobile`, `city_id`, `verify_code`, `is_effect`) VALUES
-(17, '15808715622', 2, '', 1),
-(18, '18042344388', 2, '', 1),
 (19, '15988141763', 16, '', 1);
 
 -- --------------------------------------------------------
@@ -5914,7 +5955,7 @@ CREATE TABLE IF NOT EXISTS `tg_role` (
 --
 
 INSERT INTO `tg_role` (`id`, `name`, `is_effect`, `is_delete`) VALUES
-(4, '测试管理员', 1, 0);
+(4, '管理员', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -5960,7 +6001,7 @@ INSERT INTO `tg_role_group` (`id`, `name`, `nav_id`, `is_delete`, `is_effect`, `
 (10, '文章管理', 5, 0, 1, 8),
 (11, '文章分类管理', 5, 0, 1, 9),
 (12, '套餐管理', 6, 0, 1, 10),
-(13, '类型属性', 6, 1, 1, 11),
+(13, '类型属性', 6, 0, 1, 12),
 (14, '供应商', 6, 0, 1, 11),
 (15, '城市', 6, 0, 1, 13),
 (16, '支付接口', 8, 0, 1, 14),
@@ -6130,7 +6171,7 @@ INSERT INTO `tg_role_node` (`id`, `action`, `name`, `is_effect`, `is_delete`, `g
 (183, 'add', '添加页面', 1, 0, 0, 26),
 (30, 'index', '供应商列表', 1, 0, 14, 22),
 (31, 'index', '供应商分店部门列表', 1, 0, 0, 24),
-(32, 'index', '商品类型列表', 1, 0, 13, 26),
+(32, 'index', '类型列表', 1, 0, 13, 26),
 (33, 'index', '套餐分类列表', 1, 0, 34, 28),
 (34, 'trash', '套餐分类回收站', 1, 0, 34, 28),
 (35, 'index', '套餐列表', 1, 0, 12, 29),
@@ -6510,13 +6551,6 @@ CREATE TABLE IF NOT EXISTS `tg_sms` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
---
--- 转存表中的数据 `tg_sms`
---
-
-INSERT INTO `tg_sms` (`id`, `name`, `description`, `class_name`, `server_url`, `user_name`, `password`, `config`, `is_effect`) VALUES
-(8, '易想短信平台', '', 'FW', 'http://sms.fanwe.com/', 'ynyan', 'ynyan', 'N;', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -6540,7 +6574,7 @@ CREATE TABLE IF NOT EXISTS `tg_supplier` (
 --
 
 INSERT INTO `tg_supplier` (`id`, `name`, `preview`, `content`, `cate_id`, `sort`, `is_effect`, `city_id`) VALUES
-(8, '浙一医院', './public/attachment/201404/533eff1b746f7.png', '', 7, 4, 1, 1);
+(8, '浙一医院', './public/attachment/201404/533eff1b746f7.png', '<img height="500" src="http://p0.meituan.net/deal/__33557629__7167410.jpg" alt="美团图" class="standard-image" />', 7, 4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -6675,7 +6709,7 @@ INSERT INTO `tg_user` (`id`, `user_name`, `user_pwd`, `create_time`, `update_tim
 (31, '手链', '', 0, 0, '', 1, 1, 0, '1295351744@qq.com', '', 0, 0.0000, '', '', 0, 0, 0, '', 0, '', 0, 0, 0, '', '', 0, '', 0, '', '', '', '', '', 0),
 (32, 'rocket', '', 0, 0, '', 1, 1, 0, 'rocket@163.com', '', 0, 0.0000, '', '', 0, 0, 0, '', 0, '', 0, 0, 0, '', '', 0, '', 0, '', '', '', '', '', 0),
 (33, 'liho5188', '', 0, 0, '', 1, 1, 0, 'lihofa55688@163.com', '', 0, 0.0000, '', '', 0, 0, 0, '', 0, '', 0, 0, 0, '', '', 0, '', 0, '', '', '', '', '', 0),
-(34, 'itfooter', 'c3bfddf6da6573e03280a8db6ff394c7', 1403668383, 1403668383, '127.0.0.1', 1, 1, 0, 'itfooter@vip.qq.com', '15988141763', 0, 79.8000, '', '', 0, 1403755648, 0, '', 0, '', 0, 0, 0, '', '', 0, '', 0, '', '', '', '', '', 0);
+(34, 'itfooter', 'c3bfddf6da6573e03280a8db6ff394c7', 1403668383, 1403668383, '127.0.0.1', 1, 1, 0, 'itfooter@vip.qq.com', '15988141763', 0, 79.8000, '', '', 0, 1403835980, 0, '', 0, '', 0, 0, 0, '', '', 0, '', 0, '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 

@@ -22,13 +22,13 @@ echo $k['name']($k['value']);
 ?>#consult-form-head" target=_blank><?php echo $this->_var['LANG']['ASK']; ?></a>
 			</p>
 			<ul class="list" id="new-message-ul">
-				<?php $_from = $this->_var['side_message']['list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'message_0_33591300_1403786365');if (count($_from)):
-    foreach ($_from AS $this->_var['message_0_33591300_1403786365']):
+				<?php $_from = $this->_var['side_message']['list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'message_0_32684200_1403866861');if (count($_from)):
+    foreach ($_from AS $this->_var['message_0_32684200_1403866861']):
 ?>
-				<li><?php if ($this->_var['message_0_33591300_1403786365']['point'] > 0): ?><span class='comment_<?php echo $this->_var['message_0_33591300_1403786365']['point']; ?>'><?php echo $GLOBALS['lang']['COMMENT'.$this->_var['message']['point']];?></span><?php endif; ?><a href='<?php echo $this->_var['message_0_33591300_1403786365']['url']; ?>' title="<?php echo $this->_var['message_0_33591300_1403786365']['content']; ?>"><?php 
+				<li><?php if ($this->_var['message_0_32684200_1403866861']['point'] > 0): ?><span class='comment_<?php echo $this->_var['message_0_32684200_1403866861']['point']; ?>'><?php echo $GLOBALS['lang']['COMMENT'.$this->_var['message']['point']];?></span><?php endif; ?><a href='<?php echo $this->_var['message_0_32684200_1403866861']['url']; ?>' title="<?php echo $this->_var['message_0_32684200_1403866861']['content']; ?>"><?php 
 $k = array (
   'name' => 'msubstr',
-  'value' => $this->_var['message_0_33591300_1403786365']['content'],
+  'value' => $this->_var['message_0_32684200_1403866861']['content'],
   'b' => '0',
   'e' => '30',
 );

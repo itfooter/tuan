@@ -1,0 +1,13 @@
+<div class="sbox side-inner ">
+	<div class=sbox-top></div>
+	<div class="sbox-content" style="padding:0px 10px;">
+		<H2>{$LANG.SITE_NOTICE_LIST}</H2>
+		<ul>
+			{foreach from=$site_notice_list item=notice}
+			<li><a href="{$notice.url}" title="{$notice.title}">{function name="msubstr" v=$notice.title b=0 e=10}</a></li>
+			{/foreach}
+		</ul>
+		<div style="text-align:right;"><a href="{function name="url_pack" v="acate"}">{$LANG.MORE}</a></div>
+	</div>
+	<div class=sbox-bottom></div>
+</div>

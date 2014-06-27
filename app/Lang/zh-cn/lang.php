@@ -201,13 +201,14 @@ return array(
 
 	'UC_COUPON'	=>	'我的%s',
 	'UC_ORDER'	=>	'我的订单',
+    'UC_COLLECTION' => '我的收藏',
 	'UC_MONEY'	=>	'资金管理',
 	'UC_ACCOUNT'	=>	'帐户设置',
 	'UC_INVITE'	=>	'我的邀请',
 	'UC_VOUCER'	=>	'我的代金券',
 	'UC_CONSIGNEE'	=>	'配送地址',
 	'UC_CARRY'	=>	'会员提现',
-        'UC_EXCHANGE'	=>	'兑换',
+    'UC_EXCHANGE'	=>	'兑换',
 	'SAVE_USER_SUCCESS'	=>	'保存用户资料成功',
 	'UC_LOGS'	=>	'帐户日志',
 	'UC_MONEY_INCHARGE'	=>	'会员充值',
@@ -218,6 +219,10 @@ return array(
 	'ORDER_PAY_STATUS_2'	=>	'已支付',
 
 	'UC_ORDER_MODIFY'	=>	'订单支付',
+
+    'TIME_STATUS_0'	=>	'未开始',
+    'TIME_STATUS_1'	=>	'进行中',
+    'TIME_STATUS_2'	=>	'已过期',
 
 	'ORDER_DELIVERY_STATUS_0'	=>	'未发货',
 	'ORDER_DELIVERY_STATUS_1'	=>	'部份发货',
@@ -681,5 +686,12 @@ return array(
 	'SITE_NOTICE_LIST'	=>	'站点公告',
 	'MORE'	=>	'更多',
 	'PLEASE_SELECT_ONE_DEAL'  =>  '请选择一件商品',
+	
+	'COLLECTION' => '收藏',
+	'COLLECTION_SUCCESS_TIP' => '收藏成功',
+	'COLLECTION_FAIL_TIP' => '收藏成功',
+	'ALREADY_COLLECTION' => '您已经收藏过了',
+	'CANCEL_COLLECTION_SUCCESS' => '收藏删除成功',
+	'CANCEL_COLLECTION_FAILED' => '收藏删除失败',
 );
 ?>

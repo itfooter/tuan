@@ -1,0 +1,24 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			<div id="dashboard" class="dashboard">
+					<ul>
+						{foreach from=$user_menu item=menu_item}
+						<li {if $menu_item.act eq 1}class="current"{/if}><a href="{$menu_item.url}">{$menu_item.name}</a>
+						<span></span>
+						</li>
+						{/foreach}			
+					</ul>
+			</div>
+			<div id="content" class="cf" style="overflow:hidden;">	
+				<div id="uc" class="cf">	
+				{include file=$inc_file}
+				</div>			
+			</div>
+			<!--side-->
+			{include file="inc/uc/user_info.html"}
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

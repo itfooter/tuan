@@ -1,0 +1,55 @@
+{include file="inc/header.html"} 
+<style type="text/css">
+	ul.commit_list{ padding:0px 10px;}
+	ul.commit_list li{ padding:10px; display:block; }
+	ul.commit_list li.gray{ background:#f2f2f2;}
+</style>
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="uc">
+			<div id="content" class="cf" style="overflow:hidden;">	
+								
+					<div class="box">
+						<div class="box-top"></div>
+						<div class="box-content">
+							<div class="head">
+								<h2>{$page_title}</h2>
+								<div class="blank"></div>
+								{include file="inc/supplier_nav.html"}	
+							</div>
+							<div class="sect">
+								<ul class="commit_list">
+									{foreach from=$deal_list item=deal_item key=key}
+									<li {if $key mod 2 eq 0}class="gray"{/if}>
+										<h2> {if $deal_item.time_status neq 0}{if $deal_item.buy_type eq 1}<a href='{function name="url_pack" value="score#show" id=$deal_item.id}' target="_blank">{else}<a href='{function name="url_pack" value="deal" id=$deal_item.id}' target="_blank">{/if}{/if}{$deal_item.name}
+										[{if $deal_item.time_status eq 0}{$LANG.NOT_BEGIN_DEAL}{else}{$LANG.BEGAN_DEAL}{/if}]{if $deal_item.time_status neq 0}</a>{/if} </h2>
+										{if $deal_item.time_status neq 0}
+										<br /> 
+										{$LANG.SALE_TOTAL}：{$deal_item.sale_count}   
+										{if $deal_item.is_coupon gt 0}
+										{$LANG.COUPON_TOTAL}：{$deal_item.coupon_count}  
+										{$LANG.COUPON_CONFIRM_COUNT}：{$deal_item.confirm_count}	 										
+										[<a href="{function name="url_pack" value="coupon#deal_coupon" id=$deal_item.id}">{$LANG.DEAL_COUPON_LIST}</a>]
+										{/if}
+										[<a href="{function name="url_pack" value="coupon#order" id=$deal_item.id}">{$LANG.VIEW_DETAIL}</a>]
+										[<a href="{function name="url_pack" value="coupon#export_order" id=$deal_item.id}" target="_blank">{$LANG.DOWNLOAD_ORDER}</a>]
+										{/if}							
+									</li>
+									{/foreach}
+								</ul>
+								<div class="blank"></div>
+								<div class="pages">
+									{$pages}
+								</div>
+							</div>
+						</div>
+						<div class="box-bottom"></div>
+					</div>
+						
+			</div>
+			<!--side-->
+			
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

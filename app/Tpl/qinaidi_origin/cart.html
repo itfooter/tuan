@@ -1,0 +1,90 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-buy">
+		
+			<div class="box" id="login">				
+				<div class="box">
+					<div class="box-top-w"></div>
+					<div class="box-content">
+						
+						<div class="head">
+							<h2 class="cart_step1"></h2>							
+						</div>
+						
+						<div class="sect">
+							{if $cart_list}
+							<div id="cart_list">
+							{include file="inc/cart/cart_list.html"} 	
+							</div>
+							<div style="text-align: right;" class="form-submit">
+								{if $is_lottery}	
+										<strong>{$LANG.LOTTERY_MOBILE}</strong>
+										{if $lottery_mobile neq '' and $is_verify}
+											<span id="lottery_mobile_word">
+												{$lottery_mobile}
+											</span>
+											<span id="lottery_mobile_input" style="display:none;">
+												<input type="text" class="f-input" name="lottery_mobile" value="{$lottery_mobile}">	
+												{if app_conf("SMS_ON") and app_conf("LOTTERY_SMS_VERIFY")}
+												<input type="button" class="formbutton" name="buy" value="{$LANG.GET_VERIFY_CODE}" onclick="get_verify_code(this);" >		
+												<input type="text" class="f-input" style="width:50px;" name="verify_code">			
+												{/if}
+											</span>
+											<a href="javascript:void(0);" id="modify_bind">{$LANG.MODIFY_BIND}</a>
+										{else}
+											<input type="text" class="f-input" name="lottery_mobile" value="{$lottery_mobile}">	
+											{if app_conf("SMS_ON") and app_conf("LOTTERY_SMS_VERIFY")}
+											<input type="button" class="formbutton" name="buy" value="{$LANG.GET_VERIFY_CODE}" onclick="get_verify_code(this);" >		
+											<input type="text" class="f-input" style="width:50px;" name="verify_code">			
+											{/if}
+										{/if}
+										
+								{/if}
+								<input type="button" onclick="submit_cart();" value="{$LANG.CONFIRM_BUY}" name="buy" class="formbutton">
+								<input type="button" onclick="location.href='{function name="url_pack" value="index"}';" value="继续挑选其他商品" name="buy" class="formbutton">
+								
+							</div>
+							{else}
+							<a class="empty_cart" href="{function name="url_pack" c="index"}"></a>
+							{/if}
+							<div class="blank"></div>
+							
+							<h2 class="other_deal">今天还有这些团购	</h2>
+							<div class="blank"></div>
+							<div class="dashed"></div>
+							<div class="blank"></div>
+							<?PHP
+								$this->assign("deal_list",get_side_deal(0));
+							?>
+							{foreach from=$deal_list item=deal}
+							<li class="cross_sale_deal" style="float: left; width: 300px; display: block;" alt="{$deal.name}">
+				                <div style="margin: 15px 0px;"><a target="_blank" href="{$deal.url}" title="{$deal.name}">{function name="msubstr" value=$deal.name}</a></div>
+				                <div style="margin-bottom: 10px;">
+				                	<div style="float: left;"><a target="_blank" href="{$deal.url}"><img style="border: 1px solid rgb(174, 174, 174); width:110px; height:70px;" src="{$deal.icon}"  /></a></div>
+				                    <div style="float: left; margin-left: 10px;">
+				                    	<p style="line-height: 22px;">已有<span style="font-size: 18px; font-weight: bold; color: rgb(191, 1, 1);">{$deal.buy_count}</span>人购买</p>
+				                        <p style="line-height: 22px;">原价 <span style="text-decoration: line-through;">{function name="format_price" value=$deal.origin_price}</span></p>
+				                        <p style="line-height: 22px;">现价 <span style="font-weight: bold; color: rgb(191, 1, 1);">{function name="format_price" value=$deal.current_price}</span></p>
+				                    </div>
+				                    <div class="clear"></div>
+				                </div>
+				                <div><input type="button" onclick="add_cart({$deal.id});" class="formbutton" value="放入购物车"></div>
+				            </li>
+							{/foreach}
+							
+						<div class="blank"></div>
+							
+						</div>
+						<div class="blank"></div>
+						
+					</div>
+					<div class="box-bottom-w"></div>
+				</div>
+			</div>
+		
+
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

@@ -136,7 +136,7 @@ function get_deal($id=0,$cate_id=0,$city_id=0)
 				if(app_conf("URL_MODEL")==0)
 				{
 					$deal['share_url'] .= "&r=".base64_encode(intval($GLOBALS['user_info']['id']));
-                                        $deal['share_url'] = $deal['share_url'];
+                    $deal['share_url'] = $deal['share_url'];
 				}
 				else
 				{
@@ -146,7 +146,7 @@ function get_deal($id=0,$cate_id=0,$city_id=0)
 			}
 
 			//查询抽奖号
-			$deal['lottery_count'] = intval($GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."lottery where deal_id = ".intval($deal['id'])." and buyer_id <> 0 ")) + intval($deal['buy_count']);
+			//$deal['lottery_count'] = intval($GLOBALS['db']->getOne("select count(*) from ".DB_PREFIX."lottery where deal_id = ".intval($deal['id'])." and buyer_id <> 0 ")) + intval($deal['buy_count']);
 		}
 		return $deal;
 

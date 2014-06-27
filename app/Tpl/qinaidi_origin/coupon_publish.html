@@ -1,0 +1,225 @@
+{include file="inc/header.html"} 
+<style type="text/css">
+	ul.commit_list{ padding:0px 10px;}
+	ul.commit_list li{ padding:10px; display:block; }
+	ul.commit_list li.gray{ background:#f2f2f2;}
+</style>
+<script type="text/javascript" src="{$TMPL}/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.ui.datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/datepicker.css" />
+<script type='text/javascript'  src='{$APP_ROOT}/admin/public/kindeditor/kindeditor.js'></script>
+<script type="text/javascript">
+	var VAR_MODULE = "m";
+	var VAR_ACTION = "a";
+	var ROOT = '{$APP_ROOT}/coupon.php';
+	var APPROOT = '{$APP_ROOT}/coupon.php';
+	var ROOT_PATH = '{$APP_ROOT}';
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("input[name='begin_time']").datepicker({showAnim:'fadeIn'});
+		$("input[name='end_time']").datepicker({showAnim:'fadeIn'});
+		$("form").bind("submit",function(){
+			if($.trim($(this).find("input[name='name']").val())=='')
+			{
+				$.showErr("请填写名称");
+				return false;
+			}
+			if($.trim($(this).find("input[name='sub_name']").val())=='')
+			{
+				$.showErr("请填写简称");
+				return false;
+			}
+			if($.trim($(this).find("input[name='origin_price']").val())=='')
+			{
+				$.showErr("请填写原价");
+				return false;
+			}
+			if($.trim($(this).find("input[name='balance_price']").val())=='')
+			{
+				$.showErr("请填写结算价");
+				return false;
+			}
+			
+		});
+		if($("select[name='city_id']").val()!="0"){
+		load_area_list()
+		}
+		$("select[name='city_id']").bind("change",function(){
+			load_area_list();
+		});
+	});
+</script>
+<script type="text/javascript">
+function load_area_list()
+{
+	var city_id = $("select[name='city_id']").val();
+	if($("input[name='id']").length>0)
+		var id = $("input[name='id']").val();
+	else
+		id = 0;
+	$.ajax({
+		  url: APPROOT+"?act=area_list&city_id="+city_id+"&id="+id,
+		  cache: false,
+		  success:function(data)
+		  {
+			$("#area_list").html(data);
+		  }
+		}); 
+} 
+</script>
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="uc">
+			<div id="content" class="cf" style="overflow:hidden;">	
+								
+					<div class="box">
+						<div class="box-top"></div>
+						<div class="box-content">
+							<div class="head">
+								<h3 class="modify-title">
+				发布商品
+				<a href="{function name="url_pack" value="coupon#deal"}">返回上一页</a>
+			</h3>	
+							</div>
+							<div class="sect">								
+							<form method="post" action="{function name="url_pack" value="coupon#adddeal"}" name="coupon_publish" >
+				<table cellspacing="0" cellpadding="0" border="0" class="data-table">
+					<tr>
+						<td class="dleft">名称：</td>
+						<td>
+							<input type="text" value="" class="f-input" id="name" name="name" size="30" tabindex="1">
+						</td>
+					</tr>
+					<tr>
+						<td class="dleft">简称：</td>
+						<td>
+							<input type="text" value="" class="f-input" id="sub_name" name="sub_name" size="30" tabindex="1">
+							<span class="red">&nbsp;&nbsp;用于团购券短信，邮件的显示 </span> 
+						</td>
+					</tr>
+					<tr>
+						<td>促销时间：</td>
+						<td>
+							<input type="text" value="" class="f-input" id="begin_time" name="begin_time" size="20" style="width:100px;" tabindex="1">
+							<span>&nbsp;&nbsp;至 &nbsp;&nbsp; </span> 
+							<input type="text" value="" class="f-input" id="end_time" name="end_time" size="20" style="width:100px;" tabindex="1">
+							<span class="red">&nbsp;&nbsp;请填写有效的时间格式,如：2012-01-01 </span> 
+						</td>
+					</tr>
+					<tr>
+						<td>参考原价：</td>
+						<td>
+							<input type="text" value="" class="f-input" id="origin_price" name="origin_price" size="30" tabindex="1">
+						</td>
+					</tr>
+					<tr>
+						<td>结算价：</td>
+						<td>
+							<input type="text" value="" class="f-input" id="balance_price" name="balance_price" size="30" tabindex="1">
+							<span class="red">&nbsp;&nbsp;商户与网站运营商的结算单价</span> 
+						</td>
+					</tr>
+					<tr>
+						<td>库存：</td>
+						<td>
+							<input type="text" value="" class="f-input" id="max_bought" name="max_bought" size="30" tabindex="1">
+							<span class="red">&nbsp;&nbsp;库存不填写表示不限购买数量 </span> 
+						</td>
+					</tr>
+					<tr>
+						<td>简介：</td>
+						<td>
+							<textarea name="brief" id="brief" class="f-textarea" cols="60" rows="5"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>类型：</td>
+						
+						<td>
+						<select name="buy_type">
+							<option value="0">普通团购</option>
+							<option value="1">积分兑换</option>
+							<option value="2">在线订购</option>
+							<option value="3">秒杀抢团</option>
+						</select>
+						</td>
+					</tr>
+					<tr id="deal_cate">
+						<td>分类：</td>
+						<td>
+							<select name="cate_id" id="cate_id">
+							{foreach from=$cate_list item=cate}
+							<option value="{$cate.id}">{$cate.name}</option>
+							{/foreach}
+							</select>
+						</td>
+					</tr>
+					<tr id="deal_cate_type_row" style="display:none;">
+						<td>子分类：</td>
+						<td>
+							<span></span>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>团购城市：</td>
+						<td>
+						<select name="city_id" id="city_id">
+							{foreach from=$deal_city_list item=city}
+							<option value="{$city.id}">{$city.name}</option>
+							{/foreach}
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>团购区域:</td>
+						<td class="item_input" id="area_list">
+						<select name="area_id">
+							<option value="0">==未选择区域==</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>缩略图：</td>
+						<td class="no-border" style="padding-left:0">{function name="show_ke_image" v="icon"}</td>
+					</tr>
+					<tr id="tuan_img">
+						<td>图集：</td>
+						<td class="no-border" style="padding-left:0">
+						{function name="show_ke_image" v="img0"}
+						{function name="show_ke_image" v="img1"}
+						<div class="blank"></div>
+						{function name="show_ke_image" v="img2"}
+						{function name="show_ke_image" v="img3"}
+						<div class="blank"></div>
+						{function name="show_ke_image" v="img4"}
+						{function name="show_ke_image" v="img5"}
+						</td>
+					</tr>
+					<tr>
+						<td>描述：</td>
+						<td style="height:375px; vertical-align:top;">
+						{function name="show_ke_textarea" v="descript" w="551" h="300"}
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="submit" value="提交" class="biz_pub_btn" /></td>
+					</tr>
+				</table>
+			</form>
+							</div>
+							<div class="blank"></div>
+						</div>
+						<div class="box-bottom"></div>
+					</div>
+						
+			</div>
+
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

@@ -1,0 +1,43 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			{if $deal_cate_list}
+			<div id="dashboard" class="dashboard cf">
+					<ul>
+						{foreach from=$deal_cate_list item=cate}
+						<li {if $cate.current eq 1}class="current"{/if}><a href="{$cate.url}">{$cate.name}</a>
+						<span></span>
+						</li>
+						{/foreach}													
+					</ul>
+			</div>
+			{/if}
+			<div id="content">		
+	
+			<div class="box" id="g_recent">				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>
+						</div>
+						<div class="sect">
+								<div class="notice">
+									{$deal_city.description}
+								</div>	
+								<div class="notice">							
+								{function name="sprintf" format=$LANG.NO_DEAL_TIP value=$deal_city.name}								
+								</div>	
+												
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div></div>
+			{include file="inc/side.html"} 
+	</div>
+	<!-- bd end -->
+</div>
+
+{include file="inc/footer.html"}

@@ -1,0 +1,20 @@
+{if $supplier_address_info.xpoint && $supplier_address_info.ypoint}																	
+<li>
+	<span class="saler_map">
+		<img src="http://ditu.google.cn/maps/api/staticmap?zoom=13&size=194x194&maptype=roadmap&mobile=true&markers={$supplier_address_info.ypoint},{$supplier_address_info.xpoint}&sensor=false&language=zh_CN" />
+		<a href='http://ditu.google.cn/maps?f=q&source=s_q&hl=zh-CN&geocode=&q={$supplier_address_info.api_address}' target="_blank">{$LANG.VIEW_MAP}</a>										
+	</span>
+</li>	
+{/if}					
+{if $supplier_address_info.address}				
+<li>{$supplier_address_info.address}</li>		
+{/if}		
+{if $supplier_address_info.tel}						
+<li>{$supplier_address_info.tel}‎</li>	
+{/if}	
+{if $supplier_address_info.open_time}									
+<li>{$LANG.OPEN_TIME}：{$supplier_address_info.open_time}‎</li>	
+{/if}	
+{if $supplier_address_info.route}										
+<li>{$LANG.BUS_ROUTE}：{$supplier_address_info.route}‎</li>											
+{/if}				

@@ -1,0 +1,43 @@
+{include file="inc/header.html"} 
+{if $stay eq 0}
+<meta http-equiv="refresh" content="3;URL={$jump}" />
+{/if}
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			<div id="content">		
+	
+			<div class="box" id="g_recent">				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head error">
+							<h2>{$LANG.ERROR_TITLE}</h2>
+
+						</div>
+
+						<div class="sect">
+							<div class="notice">
+								<p>
+								{$msg}	
+								</p>
+								<p>
+									{if $stay eq 0}
+									{function name="sprintf" format=$LANG.JUMP_TIP value=$jump}
+									{/if}
+								</p>
+							</div>
+
+							
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div></div>
+			<!--side-->
+			
+	</div>
+	<!-- bd end -->
+</div>
+
+{include file="inc/footer.html"}

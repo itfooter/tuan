@@ -1,0 +1,47 @@
+<div id="bd"><adv adv_id="foot_adv" /></div>
+<div class=go-top><a href="#doc"><span class=top-arrow>↑</span>{$LANG.GO_TOP}</a></div>
+<div id="ftw">
+        <div id="ft">
+			<p class="contact"><a href="{function name="url_pack" value="message#feedback"}">{$LANG.FEEDBACK}</a></p>
+            <ul class="cf">
+            	{foreach from=$deal_help item=help_cate}
+				<li class="col">
+                    <h3>{$help_cate.title}</h3>
+                    <ul class="sub-list">
+						{foreach from=$help_cate.help_list item=help_item}
+						<li><a href="{$help_item.url}" {if $help_item.new eq 1}target="_blank"{/if}>{$help_item.title}</a></li>
+						{/foreach}             
+					</ul>
+                </li>  
+				{/foreach}            
+				<li class="col end">
+                    <div class=logo-footer>
+                    	<a href="{$APP_ROOT}/" title="{function name="app_conf" value="SHOP_TITLE"}">
+                    		<img alt="{function name="app_conf" value="SHOP_TITLE"}" src="{function name="app_conf" value="FOOTER_LOGO"}" />
+						</a>
+					</div>
+                </li>
+            </ul>
+			<div class="blank"></div>
+			<div class="flink">
+			{foreach from=$f_link_data item=link_group}			
+				<h2 style="color:#ccc;">{$link_group.name}</h2>
+				{foreach from=$link_group.links item=link}
+					<a href="http://{$link.url}" target="_blank" title="{if $link.description}{$link.description}{else}{$link.name}{/if}">{if $link.img neq ''}<img src='{$link.img}' alt="{if $link.description}{$link.description}{else}{$link.name}{/if}" />{else}{$link.name}{/if}</a>
+				{/foreach}
+				<div class="clear"></div>
+			{/foreach}
+			</div>
+            <div class=copyright>
+				{function name="app_conf" value="SHOP_FOOTER"} 
+				<div class="blank1"></div>
+				{function name="app_conf" value="ICP_LICENSE"}&nbsp;&nbsp;
+				{function name="app_conf" value="COUNT_CODE"}
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

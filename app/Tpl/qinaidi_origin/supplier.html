@@ -1,0 +1,187 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default cf">
+			<div class="supplier_left">
+				<div class="half_box">
+					<div class="half_box_top"></div>
+					<div class="half_box_mid cf">
+						
+						<h2 class="supplier_title">{$supplier.name}</h2>
+						<div class="blank"></div>
+						<div class="blank supplier_sect"></div>
+						<div class="p-box" style="float:left;">							
+						<img height="121" width="200" alt="{$supplier.name}" src="{$supplier.preview}">
+						</div>
+						
+						<div class="info" style="width:200px; padding-left:10px; float:left;">
+										<h2>{function name="sprintf" value=$LANG.SUPPLIER_DEAL_TOTAL p=$supplier.deal_count}</h2>
+										<br />{$LANG.SUPPLIER_DEAL_PRICE}：<span class="red" style="font-size:14px; font-family:微软雅黑;">{$supplier.deal_price} </span>
+										<br /><span style="font-size:12px;">{if $supplier.comment_count eq 0}{$LANG.NO_COMMENT}{else}{function name="sprintf" value=$LANG.SUPPLIER_COMMENT_TOTAL p=$supplier.comment_count}{/if}</span>
+										<br />
+										{if $supplier.comment_count gt 0}
+										<span class="comment_3">{$LANG.COMMENT3}</span>：{$supplier.comment3_count} 
+										<br />  
+										<span class="comment_2">{$LANG.COMMENT2}</span>：{$supplier.comment2_count} 
+										<br />
+										<span class="comment_1">{$LANG.COMMENT1}</span>：{$supplier.comment1_count} <br />	
+										{/if}									
+										<div class="blank"></div>
+										{$supplier.brief}
+						</div>
+						<div class="blank"></div>
+						<h2>{$LANG.SUPPLIER_DETAIL}</h2>
+						<div style="overflow:hidden;">{$supplier.content}</div>
+						<div class="blank"></div>
+						<h2>{$LANG.SUPPLIER_LOCATIONS}</h2>
+								{foreach from=$supplier.location_list item=location key=key}
+								<span style="float:left; width:196px; margin:10px; _margin:5px; padding:0px;">																	
+								<li>
+									<span class="saler_map" style="width:194px;">
+										<img src="http://ditu.google.cn/maps/api/staticmap?zoom=13&size=194x194&maptype=roadmap&mobile=true&markers={$location.ypoint},{$location.xpoint}&sensor=false&language=zh_CN" />
+										<a href='http://ditu.google.cn/maps?f=q&source=s_q&hl=zh-CN&geocode=&q={function name="urlencode" value=$location.api_address}' target="_blank">{$LANG.VIEW_MAP}</a>										
+									</span>
+								</li>				
+								<li>{$location.address}</li>						
+								<li>{$location.tel}</li>									
+								<li>{$LANG.OPEN_TIME}：{$location.open_time}</li>										
+								<li>{$LANG.BUS_ROUTE}：{$location.route}</li>
+								<li>{$location.brief}</li>				
+								</span>
+								{if $key mod 2 neq 0}
+								<div class="blank"></div>
+								{/if}
+								{/foreach}
+						
+					</div>
+					<div class="half_box_foot"></div>
+				</div>
+				
+			</div><!--end left-->		
+			<div class="supplier_right">
+				<div class="half_box">
+					<div class="half_box_top"></div>
+					<div class="half_box_mid cf">
+						<h2>{$LANG.SUPPLIER_DEALS}</h2>
+						<div class="blank"></div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								load_deal(1,{$supplier.id});
+							});
+							function load_deal(page,supplier_id,ajaxurl)
+							{
+								$("#supplier_deals").html("{$LANG.LOADING}");
+								if(!ajaxurl)
+								var ajaxurl = APP_ROOT+"/supplier.php?act=load_deal&id="+supplier_id+"&p="+page;
+								$.ajax({ 
+									url: ajaxurl,
+									success: function(html){
+										$("#supplier_deals").html(html);
+									},
+									error:function(ajaxobj)
+									{
+										if(ajaxobj.responseText!='')
+										alert(ajaxobj.responseText);
+									}
+								});
+							}
+						</script>
+						<div id="supplier_deals"></div>						
+					</div>
+					<div class="half_box_foot"></div>
+				</div>
+				
+				<div class="blank"></div>
+			
+				<div class="half_box">
+					<div class="half_box_top"></div>
+					<div class="half_box_mid">
+						<script type="text/javascript">
+							$(document).ready(function(){
+								load_messages(1,{$supplier.id});
+							});
+							function load_messages(page,supplier_id,ajaxurl,point)
+							{
+								if(!point) var point = 0;
+								$("#supplier_messages").html("{$LANG.LOADING}");
+								if(!ajaxurl)
+								var ajaxurl = APP_ROOT+"/supplier.php?act=load_message&id="+supplier_id+"&p="+page+"&point="+point;
+								$.ajax({ 
+									url: ajaxurl,
+									success: function(html){
+										$("#supplier_messages").html(html);
+									},
+									error:function(ajaxobj)
+									{
+										if(ajaxobj.responseText!='')
+										alert(ajaxobj.responseText);
+									}
+								});
+							}
+						</script>
+						
+						<div id="supplier_messages"></div>	
+						
+						<div class="blank"></div>
+						<h2>{$LANG.ADD_SUPPLIER_COMMENT}</h2>
+						<div class="blank"></div>
+						{if $user_info}
+						<div id="comment_form">
+							<script type="text/javascript">
+								$(document).ready(function(){
+									$("#submit_comment").bind("click",function(){
+										var content = $.trim($("#comment_form").find("textarea[name='content']").val());
+										if(content=='')
+										{
+											$.showErr("{$LANG.COMMENT_EMPTY_TIP}");
+											return;
+										}
+										var query = new Object();
+										query.point = $("#comment_form").find("input[name='point']:checked").val();
+										query.content = content;
+										query.act = "add_comment";
+										query.rel_id = $("#comment_form").find("input[name='supplier_id']").val();
+										var ajaxurl = APP_ROOT+"/supplier.php";
+										$.ajax({ 
+											url: ajaxurl,
+											data:query,
+											type: "POST",
+											dataType: "json",
+											success: function(obj){
+												if(obj.status==1)
+												load_messages(1,{$supplier.id});
+												else
+												$.showErr(obj.info);
+											},
+											error:function(ajaxobj)
+											{
+												if(ajaxobj.responseText!='')
+												alert(ajaxobj.responseText);
+											}
+										});
+									});
+								});
+							</script>						
+							<label><input type="radio" name="point" value="3" checked="checked" /><span class="comment_3">{$LANG.COMMENT3}</span></label>
+							<label><input type="radio" name="point" value="2" /><span class="comment_2">{$LANG.COMMENT2}</span></label>
+							<label><input type="radio" name="point" value="1" /><span class="comment_1">{$LANG.COMMENT1}</span></label>
+							<div class="blank"></div>
+							<textarea class="f-textarea" cols="50" rows="5" name="content"></textarea>
+							<div class="blank"></div>
+							<input type="hidden"  value="{$supplier.id}" name="supplier_id" />
+							<input type="button" id="submit_comment" value="{$LANG.OK_POST}" class="formbutton" />
+						</div>	
+						{else}
+							{$message_login_tip}
+						{/if}
+						
+					</div>
+					<div class="half_box_foot"></div>
+				</div>
+			</div>			
+		</div>
+	</div>
+	<!-- bd end -->
+</div>
+
+{include file="inc/footer.html"}

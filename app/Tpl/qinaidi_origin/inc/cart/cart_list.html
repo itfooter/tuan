@@ -1,0 +1,54 @@
+
+							<table class="order-table">
+								<tbody><tr>
+									<th class="deal-buy-desc">{$LANG.DEAL_ITEM}</th>
+									<th class="deal-buy-quantity">{$LANG.NUMBER}</th>									
+									<th class="deal-buy-price">{$LANG.PRICE}</th>															
+									<th class="deal-buy-total">{$LANG.TOTAL_PRICE}</th>
+									<?PHP if(app_conf("CART_ON")==1){ ?>
+									<th>{$LANG.DELETE}</th>
+									<?PHP  }?>
+								</tr>
+								{foreach from=$cart_list item=cart_item}
+								<tr class="deal_{$cart_item.deal_id} deal_cart_row" rel="cart_{$cart_item.deal_id}_{$cart_item.attr_str}">
+									<td class="deal-buy-desc">{$cart_item.name}</td>
+									
+									<td class="deal-buy-quantity">
+									<input type="text" style="ime-mode: disabled;" onblur="modify_cart({$cart_item.id},this);" id="deal-buy-quantity-input" value="{$cart_item.number}" name="quantity" maxlength="4" class="input-text f-input">
+									</td>
+									
+									<td class="deal-buy-price">
+										{if $cart_item.buy_type neq 1}
+										{function name="format_price" value=$cart_item.unit_price}
+										{else}
+										<?php echo format_score(abs($this->_var['cart_item']['return_score']));?>
+										{/if}
+									</td>
+									
+									<td class="deal-buy-total">
+										{if $cart_item.buy_type neq 1}
+										{function name="format_price" value=$cart_item.total_price}
+										{else}
+										<?php echo format_score(abs($this->_var['cart_item']['return_total_score']));?>
+										{/if}
+									</td>
+									<?PHP if(app_conf("CART_ON")==1){ ?>
+									<td><a onclick="del_cart({$cart_item.id})" href="javascript:void(0);">{$LANG.DELETE}</a></td>
+									<?PHP  }?>
+								</tr>
+								{/foreach}	
+																
+									<tr class="order-total">
+									<td class="deal-buy-desc"><strong>{$LANG.PAY_TOTAL_PRICE}</strong></td>
+			
+									<td class="deal-buy-quantity"></td>									
+									<td class="deal-buy-price"></td>		
+															
+									<td <?PHP if(app_conf("CART_ON")==1){ echo "colspan=2"; }?> class="deal-buy-total">
+										<strong id="deal-buy-total-t">{function name="format_price" value=$total_price}</strong>
+									</td>
+									
+								</tr>
+							</tbody>
+							</table>
+							

@@ -1,0 +1,48 @@
+{include file="inc/header.html"} 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".paybutton,.payLink").bind("click",function(){
+			$.weeboxs.open(APP_ROOT+"/payment.php?act=tip&id={$payment_notice.id}", {contentType:'ajax',showButton:false,title:LANG['PAYMENT_TIP'],width:440,height:150});	
+		});
+	});
+</script>
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-buy">
+			<div id="content">	
+			<div class="box" id="login">	
+						
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>							
+						</div>
+						<div class="sect">
+							<p style="padding: 20px 0pt; text-align: center;">
+							{$LANG.PAY_NOW} 
+							[&nbsp;&nbsp;{$LANG.NOTICE_SN} ：<span class="red">{$payment_notice.notice_sn}</span>&nbsp;&nbsp;]
+							</p>
+							
+							<div style="padding: 20px 0pt; text-align: center;" class="order-check-form">
+							{$payment_code}	
+							</div>
+							<div style="padding: 20px 0pt; text-align: center;">
+							<a href="{function name="url_pack" value="uc_order#modify" id=$order.id}">
+								» {$LANG.MODIFY_PAYMENT_TYPE}
+							</a>&nbsp;&nbsp;&nbsp;
+							<a href="{function name="url_pack" value="deal"}">» {$LANG.OTHER_DEAL}</a>&nbsp;&nbsp;&nbsp;
+							<a href="{function name="url_pack" value="uc_order#index"}">» {$LANG.MY_ORDERS}</a>
+							</div>				
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div><!--end box-->
+				
+			</div>
+			</div>
+
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

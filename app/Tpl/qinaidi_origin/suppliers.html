@@ -1,0 +1,82 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			{if $deal_cate_list}
+			<div id="dashboard" class="dashboard cf">
+					<ul>
+						{foreach from=$deal_cate_list item=cate}
+						<li {if $cate.current eq 1}class="current"{/if}><a href="{$cate.url}">{$cate.name}</a>
+						<span></span>
+						</li>
+						{/foreach}													
+					</ul>
+			</div>
+			{/if}
+			<div id="content" class="cf">
+					
+			
+	
+			<div class="box" id="g_recent">
+				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">						
+							<h2>{$page_title}</h2>					
+						</div>
+						<div class="sect">
+							<ul>
+								{if $suppliers}
+								{foreach from=$suppliers item=supplier}
+								<li>								
+									<div class="picture">
+										<div class="p-box">									
+										<a target="_blank" title="{$supplier.name}" href="{$supplier.url}">
+											<img height="121" width="200" src="{$supplier.preview}" alt="{$supplier.name}">
+										</a>
+										</div>
+										
+										<div class="p-comment">
+											<a href="{$supplier.url}">{$LANG.ADD_FIRST_MESSAGE}</a>
+										</div>
+									</div>
+									<div class="info" style="width:410px;">
+										<div class="tit"> <a href="{$supplier.url}">{$supplier.name}</a></div>
+										<div class="gmsll cf">
+											<p>{$LANG.SUPPLIER_TEL}:{$supplier.tel} &nbsp;&nbsp;</p>
+											<p>{$LANG.SUPPLIER_CONTACT}:{$supplier.contact} </p>
+											<div class="blank1"></div>
+											<p>{$LANG.SUPPLIER_ADDRESS}:{$supplier.address} </p>
+										</div>					
+										<div class="blank"></div>
+										{function name="sprintf" value=$LANG.SUPPLIER_DEAL_TOTAL p=$supplier.deal_count}, {$LANG.SUPPLIER_DEAL_PRICE}：{$supplier.deal_price} , {if $supplier.comment_count eq 0}{$LANG.NO_COMMENT}{else}{function name="sprintf" value=$LANG.SUPPLIER_COMMENT_TOTAL p=$supplier.comment_count}{/if}<br />
+										{if $supplier.comment_count gt 0}
+										<span class="comment_3">{$LANG.COMMENT3}</span>({$supplier.comment3_count})  <span class="comment_2">{$LANG.COMMENT2}</span>({$supplier.comment2_count})  <span class="comment_1">{$LANG.COMMENT1}</span>({$supplier.comment1_count}) <br />	
+										{/if}									
+										<div class="blank1"></div>
+										{$supplier.brief}					
+									</div>
+									<div class="blank"></div>
+								</li>	
+							{/foreach}
+							{else}
+							{$LANG.NO_DEALS}
+							{/if}
+							
+							</ul>
+							<div class="clear"></div>
+							
+							<div class="pages">{$pages}</div>
+							
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div></div>
+			{include file="inc/side.html"} 
+	</div>
+	<!-- bd end -->
+</div>
+
+{include file="inc/footer.html"}

@@ -437,4 +437,50 @@ if($_REQUEST['act'] == 'check_deal_buy')
 			}
 		}
 }
+
+//增加收藏
+if($_REQUEST['act'] == 'collection_add')
+{
+	$id = intval($_REQUEST['id']);
+	$user_info = $GLOBALS['user_info'];
+	$data['status'] = 0;
+	if(!$user_info)
+	{
+		$data['info'] = $GLOBALS['lang']['PLEASE_LOGIN_FIRST'];
+		ajax_return($data);
+	}
+	else
+	{
+		if($GLOBALS['db']->getRow("select id from ".DB_PREFIX."deal where id = ".$id))
+		{
+			//是否已经收藏过了
+			$collection = $GLOBALS['db']->getRow("select id from ".DB_PREFIX."collection where deal_id = ".$id." and user_id = ".$user_info['id']);
+			if($collection)
+			{
+				$data['info'] = ($GLOBALS['lang']['ALREADY_COLLECTION']);
+			}
+			else
+			{
+                $data['deal_id'] = $id;
+                $data['user_id'] = $user_info['id'];
+                $data['create_time'] = time();
+				if($GLOBALS['db']->autoExecute(DB_PREFIX."collection",$data,'INSERT','','SILENT'))
+				{
+					$data['info'] = ($GLOBALS['lang']['COLLECTION_SUCCESS_TIP']);
+				}
+				else
+				{
+					$data['info'] = ($GLOBALS['lang']['COLLECTION_FAIL_TIP']);
+				}
+			}
+			ajax_return($data);
+		}
+		else
+		{
+			$data['status'] = 1;
+			$data['info'] = "套餐不存在";
+			ajax_return($data);
+		}
+	}
+}
 ?>

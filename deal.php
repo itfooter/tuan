@@ -20,6 +20,8 @@ elseif($id==0&&$uname!='')
 //获取当前页的团购商品
 $deal = get_deal($id);
 
+//print_r($deal);exit;
+
 //图片轮播
 if(app_conf("BROADCAST")){
 $broadcast_all=$GLOBALS['db']->getAll("select * from ".DB_PREFIX."broadcast where code='deals'  and is_effect = 1 order by id desc ");
@@ -80,9 +82,17 @@ $GLOBALS['tmpl']->assign("deal",$deal);
 
 //供应商的地址列表
 $locations = $GLOBALS['db']->getAllCached("select * from ".DB_PREFIX."supplier_location where supplier_id = ".intval($deal['supplier_id'])." order by is_main desc");
+
 $GLOBALS['tmpl']->assign("locations",$locations);
 
-require_once './app/Lib/side.php';  //读取边栏信息,需放在deal数据的分配之后
+
+//开商家的其它套餐
+$condition = " supplier_id = ".$deal['supplier_id']." and buy_type <> 1 and id != ".$id;
+$deals = get_deal_list('0,10',0,0,array(DEAL_ONLINE,DEAL_HISTORY),$condition);
+//print_r($deals['list']);exit;
+$GLOBALS['tmpl']->assign("ortherdeals",$deals['list']);
+
+require_once './app/Lib/side.php';  //读取边栏信息,需放在deal数据的分配之后  
 
 $coupon_data = $GLOBALS['db']->getRow("select * from ".DB_PREFIX."deal_coupon where deal_id = ".intval($deal['id'])." and is_new = 0 and is_valid = 1 and user_id = ".intval($user_info['id']));
 $tmpl->assign("coupon_data",$coupon_data);

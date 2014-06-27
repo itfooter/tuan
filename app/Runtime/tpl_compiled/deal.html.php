@@ -2,8 +2,6 @@
 <style>
  #container{height:250px;}  
 </style>
-<link href="http://nuomi.xnimg.cn/css_new/nuomimap134795.css" type="text/css" rel="stylesheet">
-<div id="mapcont" style="width:208px;height:209px;"></div>
 <div id="bdw" class="bdw">
 	<div id="bd" class="cf">
 		<?php if ($this->_var['deal']['buy_status'] == 2): ?>
@@ -19,9 +17,11 @@
 						<?php $_from = $this->_var['deal_cate_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'cate');if (count($_from)):
     foreach ($_from AS $this->_var['cate']):
 ?>
+                        <?php if ($this->_var['cate']['pid'] == 0): ?>
 						<li <?php if ($this->_var['cate']['current'] == 1): ?>class="current"<?php endif; ?>><a href="<?php echo $this->_var['cate']['url']; ?>"><?php echo $this->_var['cate']['name']; ?></a>
 						<span></span>
 						</li>
+                        <?php endif; ?>
 						<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>													
 					</ul>
 			</div>
@@ -83,7 +83,6 @@
 													<img src="<?php echo $this->_var['TMPL']; ?>/images/button-deal-second.gif">
 												<?php endif; ?>
 											<?php endif; ?>
-											
 										</a>
 									</span>
 									<?php endif; ?>
@@ -148,10 +147,8 @@ echo $k['name']($k['format'],$k['value']);
 						<?php endif; ?>
 						<?php if ($this->_var['deal']['time_status'] == 1): ?> 
 							<?php if ($this->_var['deal']['buy_status'] == 0): ?> 
-                                                        <?php if ($this->_var['deal']['buy_type'] != 3): ?>
 								<p class=deal-buy-tip-top><?php echo $this->_var['deal']['deal_success_num']; ?></p>
 								<p class="deal-buy-tip-notice"><?php echo $this->_var['LANG']['DEAL_LIMIT_TIP']; ?></p>
-                                                        <?php endif; ?>
 								<div class="progress-pointer" style="padding-left:<?php echo $this->_var['deal']['current_bought'] / $this->_var['deal']['min_bought'] * 194 -5; ?>px;"><span></span></div>
 								<div class="progress-bar">
 							
@@ -165,7 +162,6 @@ echo $k['name']($k['format'],$k['value']);
 								<p class="deal-buy-tip-btm"><?php echo $this->_var['deal']['success_less']; ?></p>
 							<?php endif; ?>
 							<?php if ($this->_var['deal']['buy_status'] == 1): ?> 
-                                                        <?php if ($this->_var['deal']['buy_type'] != 3): ?>
 								<p class=deal-buy-tip-top><?php echo $this->_var['deal']['deal_success_num']; ?></p>
 								<p class="deal-buy-tip-notice">
 									<?php if ($this->_var['deal']['is_lottery'] == 0): ?>
@@ -195,7 +191,6 @@ echo $k['name']($k['value']);
 ?>" style="color:#f30;"><?php echo $this->_var['LANG']['INVITE_LOTTERY_DEAL_TIP']; ?></a>
 									<?php endif; ?>
 								</p>
-                                                                <?php endif; ?>
 								<p class=deal-buy-on><?php echo $this->_var['LANG']['DEAL_SUCCESS_CONTINUE_BUY']; ?></p>
 								<p class=deal-buy-tip-btm><?php echo $this->_var['deal']['success_time_tip']; ?></p>
 							<?php endif; ?>
@@ -248,35 +243,16 @@ echo $k['name']($k['value']);
 						</div>
 					</div>
 				</div>
-				
-				
+
 				<div id=deal-stuff class=cf>
 					<?php if ($this->_var['deal_cate_list']): ?>
 					<?php echo $this->fetch('inc/share.html'); ?>
 					<div class="blank1"></div>
 					<?php endif; ?> 
-					<div class="tuan_detail_all">
-					<div id="d">
-
-						<ul class="hd">
-
-                            <li class="current" id="v:id_click_detail" rel="1"><a href="javascript:;">本团详情</a></li>
-
-							
-
-							<li class="" id="v:id_click_detail" rel="2"><a href="javascript:;">本团评论(<?php echo $this->_var['message_count']; ?>)</a></li>
-
-                          
-
-						</ul>
-                       
-
-						</div>
-					</div>
 					<div class="box box-split">
 						<div class=box-top></div>
-						<div id="dtBox_1" class="box-content cf">
-							<div class=main <?php if (app_conf ( "SUPPLIER_DETAIL" ) == 0 || $this->_var['deal'] [ 'hide_supplier_detail' ] == 1): ?> style="width:650px;"<?php endif; ?>>
+						<div class="box-content cf">
+							<div class=main  <?php if (app_conf ( "SUPPLIER_DETAIL" ) == 0 || $this->_var['deal'] [ 'hide_supplier_detail' ] == 1): ?> style="width:650px;"<?php endif; ?>>
 								<H2><?php echo $this->_var['LANG']['DEAL_DETAIL']; ?></H2>
 								<?php echo $this->_var['deal']['description']; ?>
 								<div class="blank"></div>
@@ -351,122 +327,6 @@ echo $k['name']($k['value'],$k['id']);
 							<div class=clear></div>
 
 						</div>
-                        <div id="dtBox_2" class="box-content cf" style=" display:none;">
-                            <div id="J-overview" class="overview">
-                                <div class="overview-head ccf">
-                                    <h3 class="overview-title">消费评价</h3>
-                                    <div class="overview-feedback to-rate">
-                                        我买过本单，<a href="/message.php?act=deal&id=<?php echo $this->_var['deal']['id']; ?>&is_buy=1
-										">我要评价</a>
-                                    </div>
-                                </div>
-                                <div class="overview-detail ccf">
-                                    <div class="rating-area total-detail">
-                                        <div class="total-group total-score">
-                                            <span><span class="average-score"><?php if($this->_var['message_count'] == 0) echo 0; else echo round($this->_var['comments']['mainc']/$this->_var['message_count']);?></span>分</span>
-                                        </div>
-                                        <div class="total-group">
-                                            <span class="common-rating rating-16x16"><span style="width:<?php if($this->_var['message_count'] == 0) echo 0; else  echo (($this->_var['comments']['mainc']/$this->_var['message_count'])/5)*100;?>%" class="rate-stars"></span></span>
-                                        </div>
-                                        <div class="total-group total-count">
-                                            已有<strong><?php echo $this->_var['message_count']; ?></strong>人评价
-                                        </div>
-                                    </div>
-                                    <div class="rating-area score-detail">
-                                    	<?php $_from = $this->_var['comments']['com']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'citem');if (count($_from)):
-    foreach ($_from AS $this->_var['key'] => $this->_var['citem']):
-?>
-                                        <div class="score-group">
-                                            <span class="score-title"><?php echo $this->_var['key']; ?></span>
-                                            <span class="common-rating rating-16x16"><span style="width:<?php if($this->_var['message_count'] == 0) echo 0; else  echo (($this->_var['citem']/$this->_var['message_count'])/5)*100;?>%" class="rate-stars"></span></span><?php if($this->_var['message_count'] == 0) echo 0; else  echo round($this->_var['citem']/$this->_var['message_count']);?></>分
-                                        </div>
-										<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
-                                    </div>
-                                    <div class="rating-area count-detail">
-                                        <div class="count-wrapper inline-block">
-                                        	<?php $_from = $this->_var['comments']['main']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'citem');if (count($_from)):
-    foreach ($_from AS $this->_var['key'] => $this->_var['citem']):
-?>
-                                            <div class="count-group">
-                                                <span class="score"><?php echo $this->_var['key']; ?>分</span>
-                                                <span class="percent-box inline-block"><em class="percent inline-block" style="width:<?php if($this->_var['message_count'] == 0) echo 0; else  echo ($this->_var['citem']/$this->_var['message_count'])*100;?>%"></em></span><?php echo $this->_var['citem']; ?>人
-                                            </div>
-											<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-							
-							<div class="sect consult-list">
-							
-							<ul class="list" style="padding:0px 20px;">
-								<?php $_from = $this->_var['message_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'message_item');if (count($_from)):
-    foreach ($_from AS $this->_var['key'] => $this->_var['message_item']):
-?>
-									<li name="consult-entry-<?php echo $this->_var['message_item']['id']; ?>" id="consult-entry-<?php echo $this->_var['message_item']['id']; ?>" <?php if ($this->_var['key'] % 2 == 0): ?>class="alt"<?php endif; ?> style="position:relative;">
-										<?php if(intval(app_conf("USER_AVATAR"))==1){?>
-											<img src="<?php 
-$k = array (
-  'name' => 'url_pack',
-  'value' => 'avatar#small',
-  'id' => $this->_var['message_item']['user_id'],
-);
-echo $k['name']($k['value'],$k['id']);
-?>" style="border:2px solid #f2f2f2; position:absolute; top:5px; *top:25px; _top:25px; left:5px; " />
-										<?php }?>
-											<div class="item" <?php if(intval(app_conf("USER_AVATAR"))==1){echo 'style="padding-left:70px;"';}?> >
-											
-											<p>
-												<?php if ($this->_var['message_item']['point'] > 0): ?><span class="comment_<?php echo $this->_var['message_item']['point']; ?>"><?php echo $GLOBALS['lang']['COMMENT'.$this->_var['message_item']['point']];?></span><?php endif; ?>
-												<strong><?php if($_REQUEST['act']=='seller'){?>[<?php 
-$k = array (
-  'name' => 'get_deal_city_name',
-  'value' => $this->_var['message_item']['city_id'],
-);
-echo $k['name']($k['value']);
-?>]<?php }?><?php 
-$k = array (
-  'name' => 'get_user_name',
-  'value' => $this->_var['message_item']['user_id'],
-);
-echo $k['name']($k['value']);
-?> </strong>
-												<span style="font-size:12px; color:#999;">
-												<?php echo sprintf($GLOBALS['lang']['SUPPLIER_COMMENT_SAY'],pass_date($this->_var['message_item']['create_time']));?>
-												</span>
-												
-											</p>
-											<div class="clear"></div>
-											<p class="text">
-												<?php 
-$k = array (
-  'name' => 'nl2br',
-  'value' => $this->_var['message_item']['content'],
-);
-echo $k['name']($k['value']);
-?>
-											</p>
-											<?php if ($this->_var['message_item']['admin_reply'] != ''): ?>
-											<p class="reply">
-											<strong><?php echo $this->_var['LANG']['REPLY']; ?>：</strong><?php 
-$k = array (
-  'name' => 'nl2br',
-  'value' => $this->_var['message_item']['admin_reply'],
-);
-echo $k['name']($k['value']);
-?><br>
-											</p>	
-											<?php endif; ?>									
-										</div>
-									</li>
-								<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>							
-							</ul>
-							
-							
-							<div class="blank clear"></div>							
-							<div class="pages"><?php echo $this->_var['pages']; ?></div>	
-						</div>
-                        </div>
 						<div class=box-bottom></div>
 					</div>
 				</div>
@@ -507,11 +367,11 @@ function setRemainTime()
 		var minite = Math.floor((sysSecond / 60) % 60);       //计算分
 		var hour = Math.floor((sysSecond / 3600) % 24);       //计算小时
 		var day = Math.floor((sysSecond / 3600) / 24);        //计算天
-		var timeHtml = "<span>"+hour+"</span>"+LANG['HOUR']+"<span>"+minite+"</span>"+LANG['MIN']+"";
+		var timeHtml = "<li><span>"+hour+"</span>"+LANG['HOUR']+"</li><li><span>"+minite+"</span>"+LANG['MIN']+"</li>";
 		if(day > 0)
-			timeHtml ="<span>"+day+"</span>"+LANG['DAY']+"" + timeHtml;
+			timeHtml ="<li><span>"+day+"</span>"+LANG['DAY']+"</li>" + timeHtml;
 		
-		timeHtml+="<span>"+second+"</span>"+LANG['SEC']+"";
+		timeHtml+="<li><span>"+second+"</span>"+LANG['SEC']+"</li>";
 		
 		try
 		{
@@ -526,46 +386,7 @@ function setRemainTime()
 </script>
 <?php endif; ?>
 <!--baidu-->
-
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
-<script type="text/javascript">
-	/*
-	 addressJson 有个属性 isBaiduCoordinate,true 代表baidu 坐标系
-	 */
-	var addrs = [
-	{"longitude":<?php echo $this->_var['deal']['supplier_address_info']['xpoint']; ?>,"latitude":<?php echo $this->_var['deal']['supplier_address_info']['ypoint']; ?>,"isBaiduCoordinate":true},
-	{"longitude":120.214808,"latitude":30.211613,"isBaiduCoordinate":true
-	}];
-
-	(function(){
-		var a=window.location.search,c=208,b=209,e=document.getElementById("mapcont");
-		if(a){
-			var a=a.slice(1).split("&"),d;
-			for(d in a)-1<a[d].indexOf("width")&&(c=a[d].slice(a[d].indexOf("=")+1)),-1<a[d].indexOf("height")&&(b=a[d].slice(a[d].indexOf("=")+1))
-		}
-		e.style.width=c+"px";
-		e.style.height=b+"px"
-	})();
-	var map=new BMap.Map("mapcont"),points=[],baidubug=0,callback=function(a){
-		if(1!=baidubug){
-			baidubug=1;
-			var c=null,b;
-			for(b in a)c=a[b],0==c.error&&!addrs[b].isBaiduCoordinate&&(addrs[b].longitude=c.x,addrs[b].latitude=c.y)
-		}
-	};
-	map.addControl(new BMap.NavigationControl({
-		type:BMAP_NAVIGATION_CONTROL_ZOOM
-	}));
-	for(var iterator in addrs)points.push(new BMap.Point(addrs[iterator].longitude,addrs[iterator].latitude));
-	try{
-		for(iterator in points)map.addOverlay(new BMap.Marker(points[iterator]))
-	}
-	catch(error){}finally{
-		map.setViewport(points),map.centerAndZoom(map.getViewport())
-	};
-
-</script>
-
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script> 
 
 <script type="text/javascript">
 var red_point_new = APP_ROOT+"/system/red_point.png";
@@ -662,37 +483,6 @@ $(document).ready(function(){
 	$("#locations_select").bind("change",function(){
 		switch_location();
 	});
-	$(".to-rate a").click(function(){
-		var COMMENTURL = APP_ROOT+$(this).attr('href');
-		$.ajax({
-		url: APP_ROOT+"/ajax.php?act=check_deal_buy&id=<?php echo $this->_var['deal']['id']; ?>",
-		dataType: "json",
-		success:function(obj)
-		{
-			if(obj.status == 0)
-				$.showErr(obj.info);
-			else
-				location.href = COMMENTURL;
-		}
-		
-	});
-	return false;
-	});
 });
-$("#d ul li").click(function(){
-
-	$("#d ul li").each(function(i){
-
-		$(this).removeClass('current');
-
-	 });
-
-	$(this).addClass('current');
-
-	$(".box-split .cf").hide();
-
-	$("#dtBox_"+$(this).attr('rel')).show();
-
-})
 </script>
 <?php echo $this->fetch('inc/footer.html'); ?>

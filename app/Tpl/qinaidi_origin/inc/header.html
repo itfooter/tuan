@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$page_title}{if !$hide_end_title} - {$shop_info.SHOP_TITLE}{if $city_title} - {$city_title}{$LANG.SITE}{/if}{/if} - {if $deal_city.seo_title eq ''}{function name='app_conf' value='SHOP_SEO_TITLE'}{else}{$deal_city.seo_title}{/if}</title>
+<meta name="keywords" content="{$page_keyword}{$city_title}{$shop_info.SHOP_KEYWORD}" />
+<meta name="description" content="{$page_description}{$city_title}{$shop_info.SHOP_DESCRIPTION}" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/style.css" />
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/weebox.css" />
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';
+var CART_URL = '{function name="url_pack" value="cart"}';
+var CART_CHECK_URL = '{function name="url_pack" value="cart#check"}';
+var LOADER_IMG = '{$TMPL}/images/loading.gif';
+</script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/script.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.bgiframe.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.weebox.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.pngfix.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/lazyload.js"></script>
+<script type="text/javascript" src="{$APP_ROOT}/app/Runtime/lang.js"></script>
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1}
+<script type="text/javascript" src="{$TMPL}/js/msg_sender.js"></script>
+{/if}
+</head>
+<?php
+function load_cart_count()
+{
+    $count = $GLOBALS['db']->getOne("select sum(number) from ".DB_PREFIX."deal_cart where user_id = ".intval($GLOBALS['user_info']['id'])." and session_id = '".session_id()."'");
+	return intval($count);
+}
+?>
+<body class="bg-alt">
+<div id="doc">
+	<div id="hdw">
+		<div class="head">
+        <div id="hd">
+            <div id="logo">
+				<a class="link" href="{$APP_ROOT}/"><img src="{function name="app_conf" value="SHOP_LOGO"}" /></a>
+			</div>
+			{if count($deal_city_list) gt 1}
+            <div class="guides">
+                <div class="city">
+                    <h2>{$deal_city.name}</h2>
+
+                </div>
+                <div id="guides-city-change" class="change">{$LANG.SWITCH_CITY}</div>
+                <div id="guides-city-list" class="city-list">
+                     {foreach from=$deal_city_list_zm item=deal_city_group key=key}
+						<div class="city_group">
+						<table>
+						<tr>
+						<td class="zm">
+						{$key}
+						</td>
+						<td>
+						{foreach from=$deal_city_group item=deal_city_item}
+						<span {if $deal_city_item.id eq $deal_city.id}class="current"{/if}><a href="{$deal_city_item.url}" {if $deal_city_item.is_open eq 1}class="opencity"{/if}>{$deal_city_item.name}</a></span>
+						{/foreach}
+						</td>
+						</tr>
+						</table>
+						</div>
+					{/foreach}
+
+                </div>
+            </div>
+			{/if}
+            <ul class="nav cf">
+				{foreach from=$nav_list item=nav_item}
+				<li><a href="{$nav_item.url}"  target="{if $nav_item.blank eq 1}_blank{/if}" {if $nav_item.current eq 1}class="current"{/if}>{$nav_item.name}</a></li>
+				{/foreach}
+				
+				<span class="cart_row">
+					<span class="cart_l"></span>
+					<span class="cart_c">购物车中有<span class="cart_count">{function name="load_cart_count"}</span>件商品</span>
+					<span class="cart_r"><a href="{function name="url_pack" value="cart"}">去结算>></a></span>
+				</span>      
+			</ul>
+
+			<div class="refer" style="left:0px; right:auto; text-align:left; padding:0px;">
+			<TABLE class="address">
+				<TBODY>
+					<TR>
+
+						<TD><input align="absmiddle" type="text" alt="请输入您的邮箱" value="请输入您的邮箱" id="submit-mail-text" name="email" style="border: 1px solid rgb(174, 174, 174); height: 15px; margin-top: 3px; color: rgb(174, 174, 174);" class="f-text">	</TD>
+						<TD style="padding-left:10px; padding-top:2px;">
+							<input align="absbottom" type="image" id="submit-mail-image"  value="订阅每天更新" src="{$TMPL}/images/subscribe_button.gif">
+						</TD>
+					</TR>
+				</TBODY>
+			</TABLE>
+				
+				
+			</div>
+			
+            <div class="refer">
+			 <a href="{function name="url_pack" value="subscribe#mail"}">{$LANG.MAIL_SUBSCRIBE}</a>
+			
+			{if app_conf("CN_LANG") eq 1}
+			<script type="text/javascript" src="{$TMPL}/js/cn-tw.js"></script>
+			| <a href="javascript:lang_load();">{$LANG.CN_LANG}</a>
+			{/if}
+			&nbsp;&nbsp;
+			 {if $user_info}
+			<span rel="" id="account">
+			<span title="{$user_info.user_name}" class="username">{$LANG.WELCOME}，{function name="msubstr" value=$user_info.user_name start="0" length="4"}！</span>
+			<a class="account" id="myaccount" href="{function name="url_pack" value="uc_account#index"}">{$LANG.MY_ACCOUNT}</a>
+			<a href="{function name="url_pack" value="user#loginout"}">{$LANG.LOGINOUT}</a>
+			</span>
+			{else}
+			<span id="account" rel="">
+			<a href="{function name="url_pack" value="user#login"}">{$LANG.LOGIN}</a>
+            <a href="{function name="url_pack" value="user#register"}">{$LANG.REGISTER}</a>
+			</span>
+			{/if}
+			
+			</div>
+
+			<ul id="myaccount-menu">
+			{foreach from=$user_menu item=menu_item}
+			<li><a href="{$menu_item.url}">{$menu_item.name}</a></li>
+			{/foreach}</ul>
+			</div>
+		</div>
+    </div>
+	{if $is_index eq 1}
+	<script type="text/javascript">
+		function set_sort(type)
+		{
+			var ajaxurl = APP_ROOT+"/ajax.php?act=set_sort_idx&type="+type;
+			$.ajax({ 
+				url: ajaxurl,
+				success: function(text){
+					location.reload();
+				},
+				error:function(ajaxobj)
+				{
+					if(ajaxobj.responseText!='')
+					alert(ajaxobj.responseText);
+				}
+			});
+		}
+	</script>
+	<div class="filter_contain cf">
+		<div class="cate_row">
+			<b>{$LANG.CATE_DEAL}：</b>
+			{foreach from=$bcate_list item=bcate}
+			<a href="{$bcate.url}" title="{$bcate.name}" {if $bcate.current eq 1}class="current"{/if}>{$bcate.name}[{$bcate.count}]</a>
+			{/foreach}
+		</div>
+		
+		<div class="sort_row">
+			<a href="javascript:void(0);" onclick="set_sort('begin_time');" class="{if $sort_field eq 'begin_time'}current idx_{$sort_type}{/if}">{$LANG.SORT_BEGIN_TIME}</a>
+			<a href="javascript:void(0);" onclick="set_sort('current_price');" class="{if $sort_field eq 'current_price'}current idx_{$sort_type}{/if}">{$LANG.SORT_CURRENT_PRICE}</a>
+			<a href="javascript:void(0);" onclick="set_sort('buy_count');" class="{if $sort_field eq 'buy_count'}current idx_{$sort_type}{/if}">{$LANG.SORT_BUY_COUNT}</a>
+			<a href="javascript:void(0);" onclick="set_sort('sort');" class="{if $sort_field eq 'sort'}current idx_{$sort_type}{/if}">{$LANG.SORT_SORT}</a>
+		</div>
+		
+		{if $scate_list}
+		<div class="blank1"></div>
+		
+		<div class="sub_cate_row">	
+			{foreach from=$scate_list item=scate}		
+			<a href="{$scate.url}" title="{$scate.name}" {if $scate.current eq 1}class="current"{/if}>{$scate.name}[{$scate.count}]</a>
+			{/foreach}
+		</div>
+		{/if}
+	</div>
+	{/if}
+
+	<!--adBox-->
+	<div style=" width:960px; margin:0px auto;"><adv adv_id="头部广告位" /></div>
+	<!--end advBox-->
+	
+	<div id="sysmsg-error-box">
+		<div class="sysmsgw hidd" id="sysmsg-error">
+			<div class="sysmsg"><span></span><span class="close">{$LANG.CLOSE}</span></div>
+		</div>		
+
+		<div class="sysmsgw hidd" id="sysmsg-success">
+				<div class="sysmsg"><span></span><span class="close">{$LANG.CLOSE}</span></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		{if $success}
+		$.showSuccess("{$success}");
+		{/if}
+		{if $error}
+		$.showErr("{$error}");
+		{/if}
+	</script>

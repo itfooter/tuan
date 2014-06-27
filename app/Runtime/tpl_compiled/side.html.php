@@ -8,10 +8,12 @@
 <?php echo $this->fetch('inc/side_notice.html'); ?>
 <div class="blank"></div>
 <?php endif; ?>
+
 <?php if ($this->_var['site_notice_list']): ?>
 <?php echo $this->fetch('inc/side_site_notice.html'); ?>
 <div class="blank"></div>
 <?php endif; ?>
+
 <?php if ($this->_var['side_deal_list']): ?>
 
 <?php echo $this->fetch('inc/side_deal.html'); ?>

@@ -21,7 +21,7 @@ return array(
 'ALLOW_FILE_EXT'=>'1',
 'BG_COLOR'=>'#ffffff',
 'IS_WATER_MARK'=>'0',
-'TEMPLATE'=>'default',
+'TEMPLATE'=>'new_meituan',
 'SCORE_UNIT'=>'积分',
 'USER_VERIFY'=>'1',
 'SHOP_LOGO'=>'./public/attachment/201011/4cdd501dc023b.png',

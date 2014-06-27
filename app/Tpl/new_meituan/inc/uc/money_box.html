@@ -1,0 +1,12 @@
+<div class="head">
+
+							<div class="money_box">								
+							<?PHP echo sprintf($GLOBALS['lang']['INCHARGE_TO_SITE'],app_conf("SHOP_TITLE"));?>
+							<a href="{function name="url_pack" value="uc_money#incharge"}">» {$LANG.UC_MONEY_INCHARGE}</a>
+						    <a href="{function name="url_pack" value="uc_voucher#incharge"}">» {$LANG.UC_ECV_INCHARGE}</a>
+							</div>
+							<div class="blank"></div>							
+							<h3 class="credit-title">{$LANG.YOUR_TOTLE_MONEY} <strong class="red">{function name="format_price" value=$user_info.money}</strong>
+							，{$LANG.YOUR_TOTAL_SCORE}： <strong class="red">{function name="format_score" value=$user_info.score}</strong>
+							</h3>					
+						</div>

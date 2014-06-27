@@ -45,16 +45,17 @@ $k = array (
   'value' => 'FOOTER_LOGO',
 );
 echo $k['name']($k['value']);
-?>" >
+?>" />
 						</a>
 					</div>
                 </li>
             </ul>
+			<div class="blank"></div>
 			<div class="flink">
 			<?php $_from = $this->_var['f_link_data']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'link_group');if (count($_from)):
     foreach ($_from AS $this->_var['link_group']):
 ?>			
-				<h2><?php echo $this->_var['link_group']['name']; ?></h2>
+				<h2 style="color:#ccc;"><?php echo $this->_var['link_group']['name']; ?></h2>
 				<?php $_from = $this->_var['link_group']['links']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'link');if (count($_from)):
     foreach ($_from AS $this->_var['link']):
 ?>

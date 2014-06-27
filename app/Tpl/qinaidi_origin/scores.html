@@ -1,0 +1,77 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			{if $deal_cate_list}
+			<div id="dashboard" class="dashboard cf">
+					<ul>
+						{foreach from=$deal_cate_list item=cate}
+						<li {if $cate.current eq 1}class="current"{/if}><a href="{$cate.url}">{$cate.name}</a>
+						<span></span>
+						</li>
+						{/foreach}													
+					</ul>
+			</div>
+			{/if}
+			<div id="content" class="cf">
+					
+			
+	
+			<div class="box" id="recent-deals">
+				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>
+						</div>
+						<div class="sect">
+							<ul class="deals-list">
+							{foreach from=$deals item=deal key=key}								
+								<li class="{if $key lt 2}first{/if} {if $key mod 2 eq 1}alt{/if}">							
+									<h4>
+									<span title="{$deal.name}">
+									<a href='{function name="url_pack" value="score#show" id=$deal.id uname=$deal.uname}' title="{$deal.name}">{function name="msubstr" value=$deal.name start=0 length=40}</a>
+									</span>
+									</h4>
+									<div class="pic">
+										{if $deal.buy_status eq 2}
+											<div class="soldout"></div>										
+										{elseif $deal.time_status eq 1}
+											<div class="insale"></div>
+										{/if}
+									<a href='{function name="url_pack" value="score#show" id=$deal.id uname=$deal.uname}' title="{$deal.name}"><img height="120" width="200" src="{$deal.icon}" alt="{$deal.name}"></a>
+									</div>
+									<div class="info">
+										<p class="total"><strong class="count">{$deal.buy_count}</strong>{$LANG.EXCHANGE_COUNT}</p>
+										<p class="price">
+											{$LANG.EXCHANGE_SCORE}:<strong class="red"><?PHP echo format_score(abs($this->_var['deal']['return_score']));?></strong>
+											<br />
+											{$LANG.MAX_EXCHANGE}:<?PHP if($this->_var['deal']['max_bought']>0) echo intval($this->_var['deal']['max_bought']); else echo $GLOBALS['lang']['NO_LIMIT'];?>
+										</p>
+										<div class="blank"></div>
+										
+										{if $deal.buy_status neq 2 and $deal.time_status eq 1}
+										<span class="jf_btn" onclick="add_cart({$deal.id});"></span>
+										{/if}										
+									</div>
+								</li>
+									
+							{/foreach}
+							<?php unset($this->_var['deal']);?>
+							</ul>
+							<div class="clear"></div>
+							
+							<div class="pages">{$pages}</div>
+							
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div></div>
+			{include file="inc/side.html"} 
+	</div>
+	<!-- bd end -->
+</div>
+
+{include file="inc/footer.html"}

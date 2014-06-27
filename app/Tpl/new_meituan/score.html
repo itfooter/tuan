@@ -1,0 +1,356 @@
+{include file="inc/header.html"} 
+<style>
+ #container{height:250px;}  
+</style>
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		{if $deal.buy_status eq 2}
+		{include file="inc/sold_out_tip.html"} 
+		{/if}
+		{if $coupon_data}
+		{include file="inc/new_coupon_tip.html"} 
+		{/if}
+		<div id="deal-default">			
+			<div id="content">
+				{include file="inc/share.html"}
+				<div id="deal-intro" class="cf">
+					<h1>
+						<span class='sub_title'>
+							{if count($deal_city_list) gt 1}
+							{$deal_city.name}
+							{/if}
+							{$LANG.DEAL_SCORE}						
+						</span> {$deal.name}				
+					</h1>
+					<div class="main">
+						<div class="deal-buy">
+							<div class="deal-price-tag"></div>
+							<p class="deal-price" id="deal-price">
+								<strong><?php echo format_score(abs($this->_var['deal']['return_score']));?></strong>
+								<!--begin button status-->
+								{if $deal.time_status eq 0} {*/未开始/*}
+								<span>		
+									<a href="javascript:void(0);">					
+										<img src="{$TMPL}/images/bg-deal-wait-text.gif">	
+									</a>								
+								</span>
+								{/if}
+								{if $deal.time_status eq 1}{*/已开始/*}
+									{if $deal.buy_status eq 2} {*/卖光/*}
+									<span>
+										<a href="javascript:void(0);">
+											<img src="{$TMPL}/images/bg-deal-soldout-text.gif">
+										</a>
+									</span>
+									{else}
+									<span>
+										<a href="javascript:void(0);" onclick="add_cart({$deal.id})">
+											<img src="{$TMPL}/images/button-deal-exchange.gif">
+											
+										</a>
+									</span>
+									{/if}
+								{/if}
+								{if $deal.time_status eq 2} {*/已过期/*}
+									{if $deal.buy_status eq 2} {*/卖光/*}
+									<span>
+											<a href="javascript:void(0);">
+												<img src="{$TMPL}/images/bg-deal-soldout-text.gif">
+											</a>
+										</span>
+									{else}
+									<span>		
+										<a href="javascript:void(0);">					
+											<img src="{$TMPL}/images/bg-deal-expired-text.gif">	
+										</a>								
+									</span>
+									{/if}
+								{/if}
+								<!--end button status-->		
+							</p>
+						</div>
+						<div style="height:80px;"></div>
+						{if ($deal.begin_time ne 0 and $deal.time_status eq 0) or ($deal.end_time ne 0 and $deal.time_status eq 1)} {* 时间 *}
+						<div id="deal-timeleft-box">
+							<div id="deal-timeleft" class="deal-box deal-timeleft deal-on">
+								<h3>{$LANG.TIME_LEFT}</h3>
+								<div class="limitdate">
+									<ul id="counter"></ul>
+								</div>
+							</div>						
+						</div>
+						{/if}
+
+						<div id=deal-status class="deal-box deal-status deal-status-open">
+							
+						
+						{if $deal.time_status eq 1} {*/进行中/*}
+							
+							{if $deal.buy_status eq 1} {*/成功/*}
+								<p class=deal-buy-tip-top>{$deal.deal_success_num}</p>
+								<p class="deal-buy-tip-notice">
+									<?PHP
+									$c_deal = $this->_var['deal'];
+									if($c_deal['max_bought'] != 0 && $c_deal['max_bought'] - $c_deal['buy_count'] <= 10)
+									{
+										echo sprintf($GLOBALS['lang']['REMAIN_TIP'],$c_deal['max_bought'] - $c_deal['buy_count']);
+									}
+									?>
+									{$LANG.DEAL_LIMIT_TIP}</p>
+								
+							{/if}
+							{if $deal.buy_status eq 2} {*/卖光/*}
+							<p class=deal-buy-tip-top>{$deal.deal_success_num}</p>
+							<img src="{$TMPL}/images/bg-sold-out.gif">
+							{/if}							
+						{/if}
+						{if $deal.time_status eq 2} {*/过期/*}
+							{if $deal.buy_status eq 1} {*/成功/*}
+							<p class=deal-buy-tip-top>{$deal.deal_success_num}</p>
+							{$LANG.SCORE_EXPIRED}
+							{/if}
+							{if $deal.buy_status eq 2} {*/卖光/*}
+							<p class=deal-buy-tip-top>{$deal.deal_success_num}</p>
+							<img src="{$TMPL}/images/bg-sold-out.gif">
+							{/if}
+						{/if}
+						
+						</div>
+					</div>
+					<div class=side>
+						<div id="goods_imgs" class="deal-buy-cover-img">
+							<div class="mid">
+								<ul>
+								{foreach from=$deal.image_list key=key item=image}
+								<li {if $key eq 0}class="first"{/if}>
+								<img src="{$image.img}">
+								</li>
+								{/foreach}								
+								</ul>
+								<div id="img_list">
+									{if count($deal.image_list) gt 1}
+									{foreach from=$deal.image_list key=key item=image}
+									<a {if $key eq 0}class="active"{/if} ref="<?php echo $this->_var['key']+1;?>"><?php echo $this->_var['key']+1;?></a>
+									{/foreach}	
+									{/if}							
+								</div>
+							</div>
+						</div>					
+						<div class=digest>
+							{$deal.brief}
+						</div>
+					</div>
+				</div>
+				
+				
+				<div id=deal-stuff class=cf>
+					<div class="box box-split">
+						<div class=box-top></div>
+						<div class="box-content cf">
+							<div class=main {if app_conf("SUPPLIER_DETAIL") eq 0 or $deal['hide_supplier_detail'] eq 1} style="width:650px;"{/if}>
+								<H2>{$LANG.DEAL_DETAIL}</H2>
+								{$deal.description}
+								<div class="blank"></div>
+								{if app_conf("SUPPLIER_DETAIL") eq 1 and $deal['hide_supplier_detail'] eq 0}
+								<H2>{$LANG.SUPPLIER_DETAIL}</H2>
+								{$deal.supplier_info.content}
+								{/if}
+							</div>
+							{if app_conf("SUPPLIER_DETAIL") eq 1 and $deal['hide_supplier_detail'] eq 0}
+							<div class=side>
+								<div id=side-business>
+									<H2>{$deal.supplier_info.name}  </H2>
+									<?PHP if(count($this->_var['locations'])>1){ ?>
+									 <div class="blank"></div>
+									 <select name="locations" id="locations_select">
+									 	{foreach from=$locations item=location}
+									 	<option value="{$location.id}">{$location.name}</option>
+										{/foreach}
+									 </select>
+									 <div class="blank"></div>
+									 <?PHP }?>
+									<ul>	
+										<span id="sp_location">
+										{if $deal.supplier_address_info.xpoint && $deal.supplier_address_info.ypoint}																	
+										<li>
+										<div id="container"></div>
+                                                                                <span class="saler_map">
+										                                                                        
+                                                                               <a href="{$deal.supplier_address_info.map}" target="_blank">{$LANG.VIEW_MAP}</a>	
+                                                                                </span>
+										</li>	
+										{/if}					
+										{if $deal.supplier_address_info.address}				
+										<li>{$deal.supplier_address_info.address}</li>		
+										{/if}		
+										{if $deal.supplier_address_info.tel}						
+										<li>{$deal.supplier_address_info.tel}‎</li>	
+										{/if}	
+										{if $deal.supplier_address_info.open_time}									
+										<li>{$LANG.OPEN_TIME}：{$deal.supplier_address_info.open_time}‎</li>	
+										{/if}	
+										{if $deal.supplier_address_info.route}										
+										<li>{$LANG.BUS_ROUTE}：{$deal.supplier_address_info.route}‎</li>											
+										{/if}	
+										</span>	
+									</ul>
+									<div class="blank"></div>
+									{if $deal.supplier_info.preview}			
+										<span style="text-align:center">										
+										<img src="{$deal.supplier_info.preview} " width="200">
+										</span>		
+									{/if}
+								</div>
+							</div>
+							{/if}
+							<div class=clear></div>
+
+						</div>
+						<div class=box-bottom></div>
+					</div>
+				</div>
+			</div>
+			{include file="inc/side.html"} 
+	</div>
+	<!-- bd end -->
+</div>
+{if ($deal.begin_time ne 0 and $deal.time_status eq 0) or ($deal.end_time ne 0 and $deal.time_status eq 1)} {* 时间 *}
+<script type="text/javascript">
+{if $deal.time_status eq 1} {*/结束倒计时/*}
+var endTime = {$deal.end_time}000;
+var nowTime = {function name=get_gmtime}000;
+var sysSecond = (endTime - nowTime) / 1000;
+{/if}
+{if $deal.time_status eq 0} {*/开始倒计时/*}
+var beginTime = {$deal.begin_time}000;
+var nowTime = {function name=get_gmtime}000;
+var sysSecond = (beginTime - nowTime) / 1000;
+{/if}
+var interValObj;
+setRemainTime();
+function setRemainTime()
+{	
+	if (sysSecond > 0)
+	{
+		var second = Math.floor(sysSecond % 60);              // 计算秒     
+		var minite = Math.floor((sysSecond / 60) % 60);       //计算分
+		var hour = Math.floor((sysSecond / 3600) % 24);       //计算小时
+		var day = Math.floor((sysSecond / 3600) / 24);        //计算天
+		var timeHtml = "<li><span>"+hour+"</span>"+LANG['HOUR']+"</li><li><span>"+minite+"</span>"+LANG['MIN']+"</li>";
+		if(day > 0)
+			timeHtml ="<li><span>"+day+"</span>"+LANG['DAY']+"</li>" + timeHtml;
+		
+		timeHtml+="<li><span>"+second+"</span>"+LANG['SEC']+"</li>";
+		
+		try
+		{
+			$("#counter").html(timeHtml);
+			sysSecond--;
+		}
+		catch(e){}}
+	else
+	{window.clearTimeout(interValObj);}
+	interValObj = window.setTimeout("setRemainTime()", 1000); 	
+}
+</script>
+{/if}
+<!--baidu-->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script> 
+<script type="text/javascript">
+var red_point_new = APP_ROOT+"/system/red_point.png";
+
+var xpoint='{$deal.supplier_address_info.xpoint}';
+var ypoint='{$deal.supplier_address_info.ypoint}';
+
+        var map = new BMap.Map("container"); //可以修改容器ID
+        var opts = {type: BMAP_NAVIGATION_CONTROL_ZOOM }  
+        map.addControl(new BMap.NavigationControl());  
+       
+        var point = new BMap.Point(xpoint,ypoint);
+        
+        // 将结果显示在地图上，并调整地图视野  
+        map.centerAndZoom(point, 16);  
+        var myIcon = new BMap.Icon(red_point_new, new BMap.Size(28, 38));  
+      
+        map.addOverlay(new BMap.Marker(point));
+</script>
+<!--图片轮播-->
+<script type="text/javascript">
+
+var errHideTimeOut;
+var userMenuTimeOut;
+var ecvTimeOut;
+var imgListCurr=0;
+var imgListNext=0;
+var imgListCount=0;
+var imgListInterval;
+
+function imagesInit()
+{
+	imgListCount = $('#img_list a').size();
+	
+	if(imgListCount < 2)
+		return;
+	
+	imgListInterval = setInterval('imagesRun()',3000);
+	 
+	$('#goods_imgs li,#img_list a').hover(function(){
+		clearInterval(imgListInterval);
+	},function(){
+		imgListInterval = setInterval('imagesRun()',3000);
+	});
+	 
+	$('#img_list a').click(function(){
+		var index = $('#img_list a').index(this);
+		if (imgListCurr != index){
+			imagesPlay(index);
+            imgListCurr = index;
+        };
+		return false;
+    });
+}
+
+function imagesRun()
+{
+	imgListNext = imgListCurr + 1;
+    if (imgListCurr == imgListCount - 1)
+		imgListNext = 0;
+		
+	imagesPlay(imgListNext);
+	
+	imgListCurr++;
+	
+    if (imgListCurr > imgListCount - 1)
+	{
+		imgListCurr = 0;
+		imgListNext = imgListCurr + 1;
+	}
+}
+
+function imagesPlay(next)
+{
+	$('#goods_imgs li').eq(imgListCurr).css({'opacity':'0.5'}).animate({'left':'-440px','opacity':'1'},'slow',function(){
+		$(this).css({'left':'440px' });
+	}).end().eq(next).animate({'left':'0px','opacity':'1'},'slow',function(){
+		$('#img_list a').siblings('a').removeClass('active').end().eq(next).addClass('active');
+	});
+}
+function switch_location()
+{
+	var location_id = $("#locations_select").val();
+	$.ajax({
+		url: APP_ROOT+"/ajax.php?act=get_supplier_location&id="+location_id,
+		success:function(html)
+		{
+			$("#sp_location").html(html);
+		}
+	});
+}
+$(document).ready(function(){
+	imagesInit();
+	$("#locations_select").bind("change",function(){
+		switch_location();
+	});
+});
+</script>
+{include file="inc/footer.html"}

@@ -1,0 +1,17 @@
+<div id="sidebar">
+				<div class="sbox">
+					<div class="sbox-top"></div>
+					<div class="sbox-content">
+						<div class="side-tip">
+							<h3 class="first">{$LANG.USER_INFO}</h3>
+							<p>{$LANG.USER_GROUP}：{$user_info.user_group}</p>
+							<p>{$LANG.USER_SCORE}：{function name="format_score" value=$user_info.score}</p>
+							<p>{$LANG.USER_MONEY}：{function name="format_price" value=$user_info.money}</p>
+							<p>{$LANG.USER_REFERRAL_TOTAL}：{$user_info.referral_total}</p>
+							<p>{$LANG.LAST_LOGIN_IP}：{$user_info.login_ip}</p>
+							
+						</div>
+					</div>
+					<div class="sbox-bottom"></div>
+				</div>
+</div>

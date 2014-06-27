@@ -9,7 +9,7 @@ a{ color:#333;}
 #navs ul{position:absolute;  }
 #navs ul li{ float:left; display:inline; padding:0px 5px; width:120px; }
 
-#navs a{ display:block; background:url(../images/navbgs_nohover.png) 0px 0px repeat-x; color:#fff;  padding:0px 20px;text-align:center; text-decoration:none; line-height:25px; height:28px; font-weight:bold; }
+#navs a{ display:block; color:#fff;  padding:0px 20px;text-align:center; text-decoration:none; line-height:25px; height:28px; font-weight:bold; }
 #navs a.current{ color:#2076a3; background:url(../images/navbgs_hover.png) repeat-x; line-height:28px;  }
 
 #tips{ float:right; padding:10px;}

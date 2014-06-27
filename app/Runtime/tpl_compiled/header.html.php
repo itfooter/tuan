@@ -36,7 +36,6 @@ var LOADER_IMG = '<?php echo $this->_var['TMPL']; ?>/images/loading.gif';
 <script type="text/javascript" src="<?php echo $this->_var['TMPL']; ?>/js/jquery.js"></script>
 <script type="text/javascript" src="<?php echo $this->_var['TMPL']; ?>/js/script.js"></script>
 <script type="text/javascript" src="<?php echo $this->_var['TMPL']; ?>/js/jquery.bgiframe.js"></script>
-<script type="text/javascript" src="<?php echo $this->_var['TMPL']; ?>/js/broadcast.js"></script>
 <script type="text/javascript" src="<?php echo $this->_var['TMPL']; ?>/js/jquery.weebox.js"></script>
 <script type="text/javascript" src="<?php echo $this->_var['TMPL']; ?>/js/jquery.pngfix.js"></script>
 <script type="text/javascript" src="<?php echo $this->_var['APP_ROOT']; ?>/app/Runtime/lang.js"></script>
@@ -68,7 +67,7 @@ echo $k['name']($k['value']);
                 </div>
                 <div id="guides-city-change" class="change"><?php echo $this->_var['LANG']['SWITCH_CITY']; ?></div>
                 <div id="guides-city-list" class="city-list">
-                  <?php $_from = $this->_var['deal_city_list_zm']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'deal_city_group');if (count($_from)):
+                     <?php $_from = $this->_var['deal_city_list_zm']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'deal_city_group');if (count($_from)):
     foreach ($_from AS $this->_var['key'] => $this->_var['deal_city_group']):
 ?>
 						<div class="city_group">
@@ -88,6 +87,7 @@ echo $k['name']($k['value']);
 						</table>
 						</div>
 					<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+
                 </div>
             </div>
 			<?php endif; ?>
@@ -100,7 +100,7 @@ echo $k['name']($k['value']);
 			</ul>
 
             <div class="refer">
-            <?php if (app_conf ( "SMS_ON" ) == 1): ?>
+		    <?php if (app_conf ( "SMS_ON" ) == 1): ?>
 			» <a href="javascript:void(0)" onclick="submit_sms();"><?php echo $this->_var['LANG']['SMS_SUBSCRIBE']; ?></a>&nbsp;&nbsp;
 			» <a href="javascript:void(0)" onclick="unsubmit_sms();"><?php echo $this->_var['LANG']['SMS_UNSUBSCRIBE']; ?></a>&nbsp;&nbsp;
 			<?php endif; ?>
@@ -118,7 +118,6 @@ $k = array (
 );
 echo $k['name']($k['value']);
 ?>"><?php echo $this->_var['LANG']['VERIFY_COUPON']; ?></a>&nbsp;&nbsp;
-			» <a href="<?php echo $this->_var['APP_ROOT']; ?>/cart.php" style="text-decoration:none;">我的购物车<span class="cart_count" style="display:inline-block;color:#ff6600;font-weight:500;"><?php if ($this->_var['cart_count'] != ''): ?><?php echo $this->_var['cart_count']; ?><?php else: ?>0<?php endif; ?></span>件</a>
 			<?php if (app_conf ( "CN_LANG" ) == 1): ?>
 			<script type="text/javascript" src="<?php echo $this->_var['TMPL']; ?>/js/cn-tw.js"></script>
 			» <a href="javascript:lang_load();"><?php echo $this->_var['LANG']['CN_LANG']; ?></a>&nbsp;&nbsp;
@@ -181,7 +180,6 @@ echo $k['name']($k['value']);
 ?>
 			<li><a href="<?php echo $this->_var['menu_item']['url']; ?>"><?php echo $this->_var['menu_item']['name']; ?></a></li>
 			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
-			
 			 </ul>
 			<div id="head-tel"><?php 
 $k = array (
@@ -190,25 +188,12 @@ $k = array (
 );
 echo $k['name']($k['value']);
 ?></div>        
-			<div class="search">
-				<form name="search" action="<?php 
-$k = array (
-  'name' => 'url_pack',
-  'value' => 'search',
-);
-echo $k['name']($k['value']);
-?>" method="post" class="cf">
-                    <input type="text" id="serch_text" name="se_name" class="search-input inactive"  x-webkit-speech="" x-webkit-grammar="builtin:search" lang="zh"value="<?php if (! empty ( $this->_var['se_name'] )): ?><?php echo $this->_var['se_name']; ?><?php else: ?>请输入商家名&nbsp;/&nbsp;商品名<?php endif; ?>" empty="请输入商家名&nbsp;/&nbsp;商品名"/>
-                    <input type="hidden" value="deals" name='se_module'>
-					<input type="hidden" value="index" name='se_action'>
-                    <input type="submit" class="s-submit" value="搜索"/>
-					<div class="clear"></div>
-			</form>
 			</div>
-			</div>			
 		</div>
     </div>
-	<?php if ($this->_var['is_index'] == 1): ?>
+	
+    
+    <?php if ($this->_var['is_index'] == 1): ?>
 	<script type="text/javascript">
 		function set_sort(type)
 		{
@@ -229,59 +214,38 @@ echo $k['name']($k['value']);
 	<div class="filter_contain cf">
 		<div class="cate_row">
 			<b><?php echo $this->_var['LANG']['CATE_DEAL']; ?>：</b>
-			<a href="<?php echo $this->_var['APP_ROOT']; ?>/index.php?area_id=<?php echo $this->_var['area_id']; ?>" title="全部" <?php if ($this->_var['deal_cate_id'] == 0): ?>class="current"<?php endif; ?>>全部</a>
 			<?php $_from = $this->_var['bcate_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'bcate');if (count($_from)):
     foreach ($_from AS $this->_var['bcate']):
 ?>
-			<a href="<?php echo $this->_var['bcate']['url']; ?>" title="<?php echo $this->_var['bcate']['name']; ?>" <?php if ($this->_var['bdeal_cate_id'] == $this->_var['bcate']['id']): ?>class="current"<?php endif; ?>><?php echo $this->_var['bcate']['name']; ?>[<?php echo $this->_var['bcate']['count']; ?>]</a>
+			<a href="<?php echo $this->_var['bcate']['url']; ?>" title="<?php echo $this->_var['bcate']['name']; ?>" <?php if ($this->_var['bcate']['current'] == 1): ?>class="current"<?php endif; ?>><?php echo $this->_var['bcate']['name']; ?>[<?php echo $this->_var['bcate']['count']; ?>]</a>
 			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
 		</div>
 		
-		<?php if ($this->_var['scate_list']): ?>
-		<div class="blank1"></div>		
-		<div class="sub_cate_row">	
-			<?php $_from = $this->_var['scate_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'scate');if (count($_from)):
-    foreach ($_from AS $this->_var['scate']):
-?>		
-			<a href="<?php echo $this->_var['scate']['url']; ?>" title="<?php echo $this->_var['scate']['name']; ?>" <?php if ($this->_var['deal_cate_id'] == $this->_var['scate']['id']): ?>class="current"<?php endif; ?>><?php echo $this->_var['scate']['name']; ?>[<?php echo $this->_var['scate']['count']; ?>]</a>
-			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
-		</div>
-		<?php endif; ?>
-		<?php if ($this->_var['barea_list']): ?>
-		<div class="blank1"></div>
-		<div class="area_row">
-			<b><?php echo $this->_var['LANG']['AREA_DEAL']; ?>：</b>
-			<a href="<?php echo $this->_var['APP_ROOT']; ?>/index.php?id=<?php echo $this->_var['deal_cate_id']; ?>" title="全部" <?php if ($this->_var['area_id'] == 0): ?>class="current"<?php endif; ?>>全部</a>
-			<?php $_from = $this->_var['barea_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'barea');if (count($_from)):
-    foreach ($_from AS $this->_var['barea']):
-?>
-			<a href="<?php echo $this->_var['barea']['url']; ?>" title="<?php echo $this->_var['barea']['name']; ?>" <?php if ($this->_var['barea_id'] == $this->_var['barea']['id']): ?>class="current"<?php endif; ?>><?php echo $this->_var['barea']['name']; ?>[<?php echo $this->_var['barea']['count']; ?>]</a>
-			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
-		</div>
-		<?php endif; ?>		
-		<?php if ($this->_var['subarea_list']): ?>
-		<div class="blank1"></div>		
-		<div class="sub_cate_row" style="margin-bottom:0px;">	
-			<?php $_from = $this->_var['subarea_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'barea');if (count($_from)):
-    foreach ($_from AS $this->_var['barea']):
-?>		
-			<a href="<?php echo $this->_var['barea']['url']; ?>" title="<?php echo $this->_var['barea']['name']; ?>" <?php if ($this->_var['area_id'] == $this->_var['barea']['id']): ?>class="current"<?php endif; ?>><?php echo $this->_var['barea']['name']; ?>[<?php echo $this->_var['barea']['count']; ?>]</a>
-			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
-		</div>
-		<?php endif; ?>
 		<div class="sort_row">
 			<a href="javascript:void(0);" onclick="set_sort('begin_time');" class="<?php if ($this->_var['sort_field'] == 'begin_time'): ?>current idx_<?php echo $this->_var['sort_type']; ?><?php endif; ?>"><?php echo $this->_var['LANG']['SORT_BEGIN_TIME']; ?></a>
 			<a href="javascript:void(0);" onclick="set_sort('current_price');" class="<?php if ($this->_var['sort_field'] == 'current_price'): ?>current idx_<?php echo $this->_var['sort_type']; ?><?php endif; ?>"><?php echo $this->_var['LANG']['SORT_CURRENT_PRICE']; ?></a>
 			<a href="javascript:void(0);" onclick="set_sort('buy_count');" class="<?php if ($this->_var['sort_field'] == 'buy_count'): ?>current idx_<?php echo $this->_var['sort_type']; ?><?php endif; ?>"><?php echo $this->_var['LANG']['SORT_BUY_COUNT']; ?></a>
 			<a href="javascript:void(0);" onclick="set_sort('sort');" class="<?php if ($this->_var['sort_field'] == 'sort'): ?>current idx_<?php echo $this->_var['sort_type']; ?><?php endif; ?>"><?php echo $this->_var['LANG']['SORT_SORT']; ?></a>
 		</div>
+		
+		<?php if ($this->_var['scate_list']): ?>
+		<div class="blank1"></div>
+		
+		<div class="sub_cate_row">	
+			<?php $_from = $this->_var['scate_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'scate');if (count($_from)):
+    foreach ($_from AS $this->_var['scate']):
+?>		
+			<a href="<?php echo $this->_var['scate']['url']; ?>" title="<?php echo $this->_var['scate']['name']; ?>" <?php if ($this->_var['scate']['current'] == 1): ?>class="current"<?php endif; ?>><?php echo $this->_var['scate']['name']; ?>[<?php echo $this->_var['scate']['count']; ?>]</a>
+			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+		</div>
+		<?php endif; ?>
 	</div>
 	<?php endif; ?>
 	<div class="blank"></div>
-	<!--adBox-->
-	<div style=" width:960px; margin:0px auto;"><adv adv_id="头部广告位" /></div>
-	<!--end advBox-->
 	
+	<!--adBox-->
+	<adv adv_id="头部广告位" />
+	<!--end advBox-->
 	
 	<div id="sysmsg-error-box">
 		<div class="sysmsgw hidd" id="sysmsg-error">
@@ -292,30 +256,6 @@ echo $k['name']($k['value']);
 				<div class="sysmsg"><span></span><span class="close"><?php echo $this->_var['LANG']['CLOSE']; ?></span></div>
 		</div>
 	</div>
-	
-		<?php if ($this->_var['broadcast_nums'] > 0): ?>
-<?php if (app_conf ( "BROADCAST" ) == 1): ?>
-	<div id="focus">
-	<ul>
-		<?php $_from = $this->_var['broadcast_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'lunbo');if (count($_from)):
-    foreach ($_from AS $this->_var['lunbo']):
-?>		
-			<li><a href='<?php echo $this->_var['lunbo']['link']; ?>'><img src="<?php 
-$k = array (
-  'name' => 'get_spec_image',
-  'v' => $this->_var['lunbo']['image'],
-  'w' => '960',
-  'h' => '310',
-  'g' => '0',
-);
-echo $k['name']($k['v'],$k['w'],$k['h'],$k['g']);
-?>" /></a></li>
-			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
-    </ul>
-	</div>
-	<?php endif; ?>
-	<?php endif; ?>
-	
 	<script type="text/javascript">
 		<?php if ($this->_var['success']): ?>
 		$.showSuccess("<?php echo $this->_var['success']; ?>");
@@ -323,18 +263,4 @@ echo $k['name']($k['v'],$k['w'],$k['h'],$k['g']);
 		<?php if ($this->_var['error']): ?>
 		$.showErr("<?php echo $this->_var['error']; ?>");
 		<?php endif; ?>
-	</script>
-	<script type="text/javascript">        
-	$(".search-input").focus(function(){
-		if($.trim(this.value) == this.getAttribute("empty"))
-			this.value = "";
-		$(this).removeClass("inactive");
-			
-	}).blur(function(){
-		if($.trim(this.value) == "" || $.trim(this.value) == this.getAttribute("empty"))
-		{
-			this.value = this.getAttribute("empty");
-			$(this).addClass("inactive");
-		}
-	});
 	</script>

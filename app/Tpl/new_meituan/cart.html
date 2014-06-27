@@ -1,0 +1,53 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-buy">
+			<div id="content">	
+			<div class="box" id="login">				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>							
+						</div>
+						<div class="sect">
+							<div id="cart_list">
+							{include file="inc/cart/cart_list.html"} 	
+							</div>
+							<div style="text-align: right;" class="form-submit">
+								{if $is_lottery}	
+										<strong>{$LANG.LOTTERY_MOBILE}</strong>
+										{if $lottery_mobile neq '' and $is_verify}
+											<span id="lottery_mobile_word">
+												{$lottery_mobile}
+											</span>
+											<span id="lottery_mobile_input" style="display:none;">
+												<input type="text" class="f-input" name="lottery_mobile" value="{$lottery_mobile}">	
+												{if app_conf("SMS_ON") and app_conf("LOTTERY_SMS_VERIFY")}
+												<input type="button" class="formbutton" name="buy" value="{$LANG.GET_VERIFY_CODE}" onclick="get_verify_code(this);" >		
+												<input type="text" class="f-input" style="width:50px;" name="verify_code">			
+												{/if}
+											</span>
+											<a href="javascript:void(0);" id="modify_bind">{$LANG.MODIFY_BIND}</a>
+										{else}
+											<input type="text" class="f-input" name="lottery_mobile" value="{$lottery_mobile}">	
+											{if app_conf("SMS_ON") and app_conf("LOTTERY_SMS_VERIFY")}
+											<input type="button" class="formbutton" name="buy" value="{$LANG.GET_VERIFY_CODE}" onclick="get_verify_code(this);" >		
+											<input type="text" class="f-input" style="width:50px;" name="verify_code">			
+											{/if}
+										{/if}
+										
+								{/if}
+								<input type="button" onclick="submit_cart();" value="{$LANG.CONFIRM_BUY}" name="buy" class="formbutton">
+							</div>		
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div>
+			</div>
+			{include file="inc/side.html"} 
+	</div>
+	<!-- bd end -->
+</div>
+{include file="inc/footer.html"}

@@ -1,0 +1,39 @@
+<div class="box">				
+	<div class="box">
+			<div class="box-top"></div>
+			<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>	
+							<ul class="filter">
+								<li class="current"><a href="{function name="url_pack" value="uc_money#index"}">{$LANG.UC_LOGS}</a></li>
+								<li><a href="{function name="url_pack" value="uc_money#carry"}">{$LANG.UC_CARRY}</a></li>
+							</ul>					
+						</div>
+						
+						{include file="inc/uc/money_box.html"}
+						<div class="sect">
+						
+						<table cellspacing="0" cellpadding="0" border="0" class="coupons-table" >
+								<tr>
+									<th width="300">{$LANG.EVENT}</th>
+									<th width="80">{$LANG.PRICE_AMOUNT}</th>
+									<th width="80">{$LANG.SCORE}</th>
+									<th width="140">{$LANG.CREATE_TIME}</th>
+								</tr>
+								{foreach from=$list item=log key=key}
+								<tr {if $key mod 2 eq  0}class="alt"{/if}>
+									<td style="text-align:left;">{$log.log_info}</td>
+									<td>{function name="format_price" value=$log.money}</td>
+									<td>{function name="format_score" value=$log.score}</td>
+									<td>{function name="to_date" value=$log.log_time}</td>
+								</tr>
+								{/foreach}
+						</table>
+						
+						<div class="blank"></div>
+						<div class="pages">{$pages}</div>
+						</div><!--end sect-->
+			</div>
+			<div class="box-bottom"></div>
+	</div>
+</div>
